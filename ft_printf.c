@@ -6,12 +6,11 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/01 22:33:09 by esterna          ###   ########.fr       */
+/*   Updated: 2017/06/01 22:57:52 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include "libft.h"
 
 void		padding(int n, int pad)
 {

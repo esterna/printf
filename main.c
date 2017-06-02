@@ -6,12 +6,11 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/01 11:44:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/01 22:33:30 by esterna          ###   ########.fr       */
+/*   Updated: 2017/06/01 23:04:01 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-#include "libft.h"
 #include <stdio.h>
 
 int main(void)
@@ -31,10 +30,18 @@ int main(void)
 	ft_printf("char %c = 'a'\n", 'a');
 	ft_printf("hex %x = ff\n", 0xff);
 	ft_printf("hex %02x = 00\n", 0); 
-	ft_printf("signed %d = unsigned %u = hex %x\n", -3, -3, -3);
+//	ft_printf("signed %d = unsigned %u = hex %x\n", -3, -3, -3);
 	ft_printf("%d %s(s)%", 0, "message");
 	ft_printf("\n");
 	ft_printf("%d %s(s) with %%\n", 0, "message"); /** Works but need to fix precision. **/
+/**	ft_printf("justif: \"%-10s\"\n", "left");
+	ft_printf("justif: \"%10s\"\n", "right");
+	ft_printf(" 3: %04d zero padded\n", 3);
+	ft_printf(" 3: %-4d left justif.\n", 3);
+	ft_printf(" 3: %4d right justif.\n", 3);
+	ft_printf("-3: %04d zero padded\n", -3);
+	ft_printf("-3: %-4d left justif.\n", -3);
+	ft_printf("-3: %4d right justif.\n", -3);**/
 	
 	return 0;
 }
