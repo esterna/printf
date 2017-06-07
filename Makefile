@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/05/31 11:56:20 by esterna          ###   ########.fr        #
+#    Updated: 2017/06/06 14:06:09 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,9 @@ $(NAME):
 	gcc $(CFLAGS) -c $(FUNCTIONS) $(DEPS)
 	ar rc $@.a $(OBJ)
 	ranlib $@.a
+
+exe:
+	gcc $(CFLAGS) -g -o printf main_test.c ft_printf.c libftprintf.a
 
 clean:
 	/bin/rm -f $(OBJ)
