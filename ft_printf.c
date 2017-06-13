@@ -6,39 +6,11 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/06 18:36:57 by esterna          ###   ########.fr       */
+/*   Updated: 2017/06/12 17:02:07 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-
-void		setup_format(t_format f)
-{
-	f.pad = 0;
-	f.sign = 0;
-	f.width = 0;
-	f.prefix = 0;
-	f.precision = -1;
-	f.n = 0;
-	f.size = 0;
-}
-
-void		padding(int n, int pad)
-{
-	char ch;
-
-	if (n <= 0)
-		return ;
-	if (pad == 0 || pad == 1)
-		ch = ' ';
-	else
-		ch = '0';
-	while (n)
-	{
-		ft_putchar(ch);
-		n--;
-	}
-}
 
 /**
  ** Checks for both format and width. Updates format struct.
@@ -47,41 +19,46 @@ void		padding(int n, int pad)
  **			 2	: sign all numbers, '+' in front of positives, etc.
  **	prefix:  0	: no prefix
  ** 		 1	: prefix all numbers
- **	pad:	 0	: no padding
+ **	pad:	 0	: default right-justification and padding with spaces
  **			 1	: left-justify the object
  **		 	 2  : pads the number with zeroes instead of spaces
+ **			 3+ : Both
  ** width:	 #	: Minimum number of characters to be printed.
  **				  If the value to be printed is shorter than this number,
  **				  the result is padded with blank spaces.
  **				  The value is not truncated even if the result is larger. 
  **/
-void			format_width(const char **current, t_format format)
+t_format			format_width(const char **current, t_format format)
 {
 	while (ft_strchr(FLAGS, **current))
 	{
 		switch(**current)
 		{
-			case '-' : format.pad = 1;
+			case '-' : format.pad += 1;
+						(*current)++;
 					   break;
-			case '0' : format.pad |= 2;
+			case '0' : format.pad += 2;
 					   while (**current == '0')
 						   (*current)++;
 					   break;
 			case ' ' : if (!format.sign)
 						   format.sign = 1;
+						(*current)++;
 					   break;
 			case '+' : format.sign = 2;
+					   (*current)++;
 					   break;
 			case '#' : format.prefix = 1;
+					   (*current)++;
 					   break;
 		}
-		(*current)++;
-	}
+			}
 	while ('0' <= **current && **current <= '9')
 	{
 		format.width = (format.width * 10) + (**current - '0');
 		(*current)++;
 	}
+	return (format);
 }
 
 /**
@@ -97,7 +74,7 @@ void			format_width(const char **current, t_format format)
 ** For c type − it has no effect. When no precision is specified, the default is 1.
 ** If the period is specified without an explicit value for precision, 0 is assumed.
 **/
-void			format_precision(const char **current, t_format format)
+t_format			format_precision(const char **current, t_format format)
 {
 	(*current)++;
 	format.precision = 0;
@@ -106,28 +83,115 @@ void			format_precision(const char **current, t_format format)
 		format.precision = (format.precision * 10) + (**current - '0');
 		(*current)++;
 	}
+	return (format);
 }
 
-int				printi(long long n, char ch, t_format format)
+/**
+** Prints all number specifiers with precision and width applied.
+**/
+t_format				printi(char *str, char ch, t_format format)
 {
-	int p;
-	int w;
+	int prec;
+	int width;
+	char wch;
 
-	p = format.precision - ft_nbrsize(n);
-	if (n > 0 &&
-	while (p > 0)
+	prec = format.precision - ft_strlen(str);
+	width = format.width - (ft_strlen(str) + ((prec > 0) ? prec : 0));
+	wch = (format.pad <= 1) ? ' ' : '0';
+	format.n += ((prec > 0) ? prec : 0) + ((width > 0) ? width : 0) + ft_strlen(str);
+	if (format.sign && *str != '-')
+		ft_putchar((format.sign == 1) ? ' ' : '+');
+	else if (*str == '-' && wch == '0')
 	{
-		
+		ft_putchar(*str);
+		str++;
 	}
-	switch (ch)
+	while ((!format.pad || format.pad == 2) && width > 0)
 	{
-		case 'i':
-		case 'd':
-		case 'D':
-		case 'u':
-		case 'x':
-		case 'X':
+		ft_putchar(wch);
+		width--;
 	}
+	if (prec > 0 &&	*str != '0')
+	{
+		while (prec)
+		{
+			ft_putchar('0');
+			prec--;
+		}
+	}
+	if (format.prefix && *str != '0')
+	{
+		switch(ch)
+		{
+			case 'o' : ft_putchar('0');
+					   break;
+			case 'x' : ft_putstr("0x");
+					   break;
+			case 'X' : ft_putstr("0X");
+					   break;
+		}
+	}
+	if (!(prec == 0 && *str != '0'))
+		ft_putstr(str);
+	while (width > 0)
+	{
+		ft_putchar(wch);
+		width--;
+	}
+	return (format);
+}
+
+/**
+** Prints all string and character specifiers with precision and width applied
+**/
+t_format			prints(char *str, char ch, t_format format)
+{
+	char wch;
+	
+	format.width = format.width - ((!str) ? 6 : ((format.precision < 0 || format.precision > (int)ft_strlen(str))
+													? ft_strlen(str) : format.precision));
+	wch = (format.pad <= 1) ? ' ' : '0';
+	while ((!format.pad || format.pad == 2) && format.width > 0)
+	{
+		ft_putchar(wch);
+		format.width--;
+		format.n++;
+	}
+	if (!str && ch == 's')
+	{
+		ft_putstr("(null)");
+		format.n += 6;
+	}
+	else if (!str)
+	{
+		ft_putchar(ch);
+		format.n++;
+	}
+	else
+	{
+		if (format.precision < 0)
+		{
+			ft_putstr(str);
+			format.n += ft_strlen(str);
+		}
+		else
+		{
+			while (format.precision && *str)
+			{
+				ft_putchar(*str);
+				str++;
+				format.n++;
+				format.precision--;
+			}
+		}
+	}
+	while (format.width > 0)
+	{
+		ft_putchar(wch);
+		format.width--;
+		format.n++;
+	}
+	return (format);
 }
 
 int				ft_printf(const char *current, ...)
@@ -135,16 +199,22 @@ int				ft_printf(const char *current, ...)
 	unsigned int u;
 	char *tmp;
 	int *ntmp;
-	int i;
+	long int i;
 	t_format format;
-	void (*equ[127]) (void);
+/**	void (*equ[127]) (void);**/
 	va_list arg;
 	
 	va_start(arg, current);
-	setup_format(format);
-/**	equ['i'] = equ['d'] = printi((void)(i = va_arg(arg, int)), format); Don't remember what this line does **/
+	format.n = 0;
+	/**equ['i'] = equ['d'] = equ['o'] = equ['x'] = equ['X'] = equ['u'] = &printi;**/
 	while(*current)
 	{
+		format.pad = 0;
+		format.sign = 0;
+		format.width = 0;
+		format.prefix = 0;
+		format.precision = -1;
+		format.size = 0;
 		while(*current != '%' && *current)
 		{
 			ft_putchar(*current);
@@ -153,126 +223,64 @@ int				ft_printf(const char *current, ...)
 		}
 		if (!*current)
 			break;
+		else if (*current == '%' && *(current + 1) == '\0')
+		{
+			format.n = -1;
+			break;
+		}
 		current++;
-		if (ft_strchr(FLAGS, *current))
-			format_width(&current, format);
+		if (ft_strchr(FLAGS, *current) || ft_isdigit(*current))
+			format = format_width(&current, format);
 		if (*current == '.')
-			format_precision(&current, format);
+			format = format_precision(&current, format);
 		if (!*current)
 			break;
 		switch(*current)
 		{
 			case '\0' : break;
 			case 'h' : 
-			case '%' : ft_putchar('%');
-					   format.n++;
+			case '%' : format = prints(NULL, '%', format);
 					   break;
 			case 'c' : i = va_arg(arg, int);
-					   ft_putchar(i);
-					   format.n++;
+					   format = prints(NULL, i, format);
 					   break;
 			case 'D' : i = va_arg(arg, long int);
-					   if (format.pad == 0 || format.pad == 2)
-						   padding(format.precision - ft_nbrsize_base(i, 10), format.pad);
-					   if (!(format.precision == 0 && i == 0))
-					   {
-						   if (format.sign && i > 0)
-							   ft_putchar((format.sign > 0) ? '+' : ' ');
-						   ft_putnbr(i);
-						   format.n = format.n + ft_strlen(ft_itoa_base(i, 10)) + ((format.sign) ? 1 : 0);
-					   }
-					   if (format.pad == 1 || format.pad == 3)
-						   padding(format.precision - ft_nbrsize_base(i, 10), format.pad);
+					   tmp = ft_ulltoa_base(((i >= 0) ? i : i * -1), ((i >= 0) ? 'p' : 'n'), 10);
+					   format = printi(tmp, 'D', format);
 					   break;
 			case 'i' :
 			case 'd' : i = va_arg(arg, int);
-					   if (format.pad == 0 || format.pad == 2)
-						   padding(format.precision - ft_nbrsize_base(i, 10), format.pad);
-					   if (!(format.precision == 0 && i == 0))
-					   {
-						   if (format.sign && i > 0)
-							   ft_putchar((format.sign > 0) ? '+' : ' ');
-						   ft_putnbr(i);
-						   format.n = format.n + ft_strlen(ft_itoa_base(i, 10)) + ((format.sign) ? 1 : 0);
-					   }
-					   if (format.pad == 1 || format.pad == 3)
-						   padding(format.precision - ft_nbrsize_base(i, 10), format.pad);
+					   tmp = ft_ulltoa_base(((i >= 0) ? i : i * -1), ((i >= 0) ? 'p' : 'n'), 10);
+					   format = printi(tmp, 'd', format);
 					   break;
-			case 'o' : i = va_arg(arg, unsigned int);
-					   if (format.pad == 0 || format.pad == 2)
-						   padding(format.precision - ft_nbrsize_base(i, 8), format.pad);
-					   if (!(format.precision == 0 && i == 0))
-					   {
-						   if (format.prefix && i)
-							   ft_putchar('0');
-						   ft_putstr(ft_itoa_base(i, 8));
-						   format.n = format.n + ft_strlen(ft_itoa_base(i, 8)) + ((format.prefix) ? 1 : 0);
-					   }
-					   if (format.pad == 1 || format.pad == 3)
-						   padding(format.precision - ft_nbrsize_base(i, 8), format.pad);
+			case 'o' : u = va_arg(arg, unsigned int);
+					   tmp = ft_ulltoa_base(u, 'p', 8);
+					   format = printi(tmp, 'o', format);
 					   break;
 			case 's' : tmp = va_arg(arg, char *);
-					   if (!tmp)
-					   {
-						   ft_putstr("(null)");
-						   format.n += 6;
-					   }
-					   else if (format.precision == 1)
-					   {
-						   ft_putstr(tmp);
-						   format.n += ft_strlen(tmp);
-					   }
-					   else if (format.precision)
-					   {
-						   ft_putnstr(tmp, format.precision);
-						   format.n += format.precision;
-					   }
+					   format = prints(tmp, 's', format);
 					   break;
-			case 'x' : i = va_arg(arg, unsigned int);
-					   if (format.pad == 0 || format.pad == 2)
-						   padding(format.precision - ft_nbrsize_base(i, 16), format.pad);
-					   if (!(format.precision == 0 && i == 0))
-					   {
-						   if (format.prefix && i)
-							   ft_putstr("0x");
-						   ft_putstr(ft_str_tolower(ft_itoa_base(i, 16)));
-						   format.n = format.n + ft_strlen(ft_itoa_base(i, 16)) + ((format.prefix) ? 2 : 0);
-					   }
-					   if (format.pad == 1 || format.pad == 3)
-						   padding(format.precision - ft_nbrsize_base(i, 16), format.pad);
+			case 'x' : u = va_arg(arg, unsigned int);
+					   tmp = ft_str_tolower(ft_ulltoa_base(u, 'p', 16));
+					   format = printi(tmp, 'x', format);
 					   break;
-			case 'X' : i = va_arg(arg, unsigned int);
-					   if (format.pad == 0 || format.pad == 2)
-						   padding(format.precision - ft_nbrsize_base(i, 16), format.pad);
-					   if (!(format.precision == 0 && i == 0))
-					   {
-						   if (format.prefix && i)
-							   ft_putstr("0X");
-						   ft_putstr(ft_itoa_base(i, 16));
-						   format.n = format.n + ft_strlen(ft_itoa_base(i, 16)) + ((format.prefix) ? 2 : 0);
-					   }
-					   if (format.pad == 1 || format.pad == 3)
-						   padding(format.precision - ft_nbrsize_base(i, 16), format.pad);
+			case 'X' : u = va_arg(arg, unsigned int);
+					   tmp = ft_ulltoa_base(u, 'p', 16);
+					   format = printi(tmp, 'X', format);
 					   break;
 			case 'u' : u = va_arg(arg, unsigned int);
-					   if (format.pad == 0 || format.pad == 2)
-						   padding(format.precision - ft_nbrsize_base(u, 10), format.pad);
-					   if (!(format.precision == 0 && u == 0))
-					   {
-						   if (format.prefix)
-							   ft_putchar('+');
-						   ft_putnbr(u);
-						   format.n = format.n + ft_strlen(ft_itoa_base(u, 10));
-					   }
-					   if (format.pad == 1 || format.pad == 3)
-						   padding(format.precision - ft_nbrsize_base(u, 10), format.pad);
+					   tmp = ft_ulltoa_base(u, 'p', 10);
+					   format = printi(tmp, 'u', format);
 					   break;
 			case 'n' : ntmp = va_arg(arg, int *);
 					   *ntmp = format.n;
 					   break;
+			default  : ft_putchar('%');
+					   ft_putchar(*current);
+					   format.n += 2;
 		}
 		if (*current)
-			current++; /** May end up not being necessary. **/
+			current++;
 	}
 	va_end(arg);
 	return (format.n);

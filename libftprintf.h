@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/06 14:09:50 by esterna          ###   ########.fr       */
+/*   Updated: 2017/06/12 16:21:37 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,11 @@ typedef			struct s_format
 
 int			ft_printf(const char *format, ...);
 
+int			ft_isdigit(int n);
+
 char		*ft_itoa_base(int n, int base);
+
+char		*ft_ulltoa_base(unsigned long long n, char sign, int base);
 
 void		ft_putchar(char c);
 
