@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/12 17:02:07 by esterna          ###   ########.fr       */
+/*   Updated: 2017/06/21 17:35:36 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,15 +119,19 @@ t_format				printi(char *str, char ch, t_format format)
 			prec--;
 		}
 	}
-	if (format.prefix && *str != '0')
+	if (format.prefix && (*str != '0' || ch == 'p'))
 	{
 		switch(ch)
 		{
 			case 'o' : ft_putchar('0');
+					   format.n++;
 					   break;
+			case 'p' :
 			case 'x' : ft_putstr("0x");
+					   format.n += 2;
 					   break;
 			case 'X' : ft_putstr("0X");
+					   format.n += 2;
 					   break;
 		}
 	}
@@ -142,12 +146,12 @@ t_format				printi(char *str, char ch, t_format format)
 }
 
 /**
-** Prints all string and character specifiers with precision and width applied
-**/
+ ** Prints all string and character specifiers with precision and width applied
+ **/
 t_format			prints(char *str, char ch, t_format format)
 {
 	char wch;
-	
+
 	format.width = format.width - ((!str) ? 6 : ((format.precision < 0 || format.precision > (int)ft_strlen(str))
 													? ft_strlen(str) : format.precision));
 	wch = (format.pad <= 1) ? ' ' : '0';
@@ -194,16 +198,60 @@ t_format			prints(char *str, char ch, t_format format)
 	return (format);
 }
 
+t_format		printd(char *str, char ch, t_format format)
+{
+	int width;
+	char wch;
+
+	width = format.width - ft_strlen(str);
+	wch = (format.pad <= 1) ? ' ' : '0';
+	format.n += ((width > 0) ? width : 0) + ft_strlen(str)
+				+ ((format.prefix && !format.precision) ? 1 : 0);
+	if (format.sign && *str != '-')
+		ft_putchar((format.sign == 1) ? ' ' : '+');
+	else if (wch == '0')
+	{
+		if (ch == 'a' || ch == 'A')
+		{
+			ft_putnchar(str, (*str == '-') ? 3 : 2);
+			str = str + ((*str == '-') ? 3 : 2);
+		}
+		else if (*str == '-')
+		{
+			ft_putchar(*str);
+			str++;
+		}
+	}
+	if (format.pad && width > 0)
+		char_repeat(wch, width);
+	if (ch == 'e' || ch == 'E' || ch == 'a' || ch == 'A')
+	{
+		ft_putchar(*str);
+		str++;
+	}
+	else if (ch == 'f' || ch == 'F')
+		ft_putstr(str);
+	if (format.prefix && *str != '.' && format.precision == 0)
+		ft_putchar('.');
+	if (ch != 'f' && ch != 'F')
+		ft_putstr(str);
+	if (width > 0)
+		char_repeat(wch, width);
+	return (format);
+}
+
 int				ft_printf(const char *current, ...)
 {
 	unsigned int u;
+	const void *ptr;
 	char *tmp;
 	int *ntmp;
 	long int i;
+	double dbl;
 	t_format format;
-/**	void (*equ[127]) (void);**/
+	/**	void (*equ[127]) (void);**/
 	va_list arg;
-	
+
 	va_start(arg, current);
 	format.n = 0;
 	/**equ['i'] = equ['d'] = equ['o'] = equ['x'] = equ['X'] = equ['u'] = &printi;**/
@@ -253,6 +301,56 @@ int				ft_printf(const char *current, ...)
 					   tmp = ft_ulltoa_base(((i >= 0) ? i : i * -1), ((i >= 0) ? 'p' : 'n'), 10);
 					   format = printi(tmp, 'd', format);
 					   break;
+			case 'a' : dbl = va_arg(arg, double);
+						tmp = ft_dtosf_base(dbl, 16, format.precision);
+					   format = printd(tmp, 'a', format);
+					   break;
+			case 'A' : dbl = va_arg(arg, double);
+						tmp = ft_str_toupper(ft_dtosf_base(dbl, 16, format.precision));
+					   format = printd(tmp, 'A', format);
+					   break;
+			case 'e' : dbl = va_arg(arg, double);
+						format.precision = format.precision >= 0 ? format.precision : 6;
+						tmp = ft_dtosf_base(dbl, 10, format.precision);
+					   format = printd(tmp, 'e', format);
+					   break;
+			case 'E' : dbl = va_arg(arg, double);
+						format.precision = format.precision >= 0 ? format.precision : 6;
+						tmp = ft_str_toupper(ft_dtosf_base(dbl, 10, format.precision));
+					   format = printd(tmp, 'E', format);
+					   break;
+			case 'F' :
+			case 'f' : dbl = va_arg(arg, double);
+						format.precision = format.precision >= 0 ? format.precision : 6;
+					   tmp = ft_dtoa_base(dbl, 10, format.precision);
+					   format = printd(tmp, 'f', format);
+					   break;
+			case 'g' : dbl = va_arg(arg, double);
+						format.precision = format.precision >= 0 ? format.precision : 6;
+						if (find_exponent(dbl, 10) < -4 || find_exponent(dbl, 10) >= format.precision)
+						{
+							tmp = ft_dtosf_base(dbl, 10, format.precision);
+							format = printd(tmp, 'e', format);
+						}
+						else
+						{
+							tmp = ft_dtoa_base(dbl, 10, format.precision);
+							format = printd(tmp, 'f', format);
+						}
+					   break;
+			case 'G' : dbl = va_arg(arg, double);
+						format.precision = format.precision >= 0 ? format.precision : 6;
+						if (find_exponent(dbl, 10) < -4 || find_exponent(dbl, 10) >= format.precision)
+						{
+							tmp = ft_str_toupper(ft_dtosf_base(dbl, 10, format.precision));
+							format = printd(tmp, 'E', format);
+						}
+						else
+						{
+							tmp = ft_dtoa_base(dbl, 10, format.precision);
+							format = printd(tmp, 'F', format);
+						}
+					   break;
 			case 'o' : u = va_arg(arg, unsigned int);
 					   tmp = ft_ulltoa_base(u, 'p', 8);
 					   format = printi(tmp, 'o', format);
@@ -271,6 +369,16 @@ int				ft_printf(const char *current, ...)
 			case 'u' : u = va_arg(arg, unsigned int);
 					   tmp = ft_ulltoa_base(u, 'p', 10);
 					   format = printi(tmp, 'u', format);
+					   break;
+			case 'p' : ptr = va_arg(arg, void *);
+					   format.prefix = 1;
+					   if (!ptr)
+						   format = printi("0", 'p', format);
+					   else
+					   {
+						   tmp = ft_str_tolower(ft_ulltoa_base((unsigned long int)ptr, 'p', 16));
+						   format = printi(tmp, 'p', format);
+					   }
 					   break;
 			case 'n' : ntmp = va_arg(arg, int *);
 					   *ntmp = format.n;
