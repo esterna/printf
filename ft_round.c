@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 18:06:33 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/20 18:09:43 by esterna          ###   ########.fr       */
+/*   Updated: 2017/06/21 21:09:17 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ double   		ft_round(double dbl, int precision)
 		dec = dec / 10;
 		precision--;
 	}
-	dbl = (int)(dbl / dec) * dec;
+	dbl = (int)((float)(dbl / dec)) * dec;
 	if (n2 > n1)
 		dbl = dbl + dec;
 	return (dbl);

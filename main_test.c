@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/21 20:32:11 by esterna          ###   ########.fr       */
+/*   Updated: 2017/06/27 20:03:16 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,17 +68,19 @@ int main(void)
 		ft_printf("Error: mine: %d actual: %d\n", n1, n2);
 */
 
-	ft_printf("%e\n", (double)1200);
-	ft_printf("%E\n\n", (double)1200);
+/*	ft_printf("%-15.4e hi\n", 1200.0);
+	ft_printf("%-15.4E hi\n\n", 1200.0);
 
-	ft_printf("%f\n", (double)1200);
-	ft_printf("%F\n\n", (double)1200);
+	ft_printf("%-15.4f hi\n", 1200.0);
+	ft_printf("%-15.4F hi\n\n", 1200.0);
 
-	ft_printf("%g\n", (double)1200);
-	ft_printf("%G\n\n", (double)1200);
+	ft_printf("%-15.4g hi\n", 1200.0);
+	ft_printf("%-15.4G hi\n\n", 1200.0);
 
-	ft_printf("%a\n", (double)1200);
-	ft_printf("%A\n\n", (double)1200);
+	ft_printf("%-15.4a hi\n", 1200.0);
+	ft_printf("%-15.4A hi\n\n", 1200.0);
+	*/
+
 		
 	return 0;
 }

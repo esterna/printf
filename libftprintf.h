@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/21 16:40:46 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/12 15:54:36 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,22 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdarg.h>
+# include <math.h>
 
 # define FLAGS "-+ #0"
+# define LENGTH "hljz"
 
 typedef			struct s_format
 {
-	int pad;
-	int sign;
-	int width;
-	int prefix;
-	int precision;
-	int n;
-	int size;
+	char	specifier;
+	int		pad;
+	int		sign;
+	int		width;
+	int		prefix;
+	int		precision;
+	int		n;
+	int		size;
+	char	*ptr;
 }				   		t_format;
 
 void		char_repeat(char ch, int n);
@@ -56,6 +60,10 @@ char		*ft_strchr(const char *str, int c);
 
 size_t		ft_strlen(const char *str);
 
+char		*ft_strdup(const char *src);
+
+char		*ft_strcpy(char *dest, const char *src);
+
 void		ft_putstr(char const *str);
 
 void		ft_putnstr(char *str, int n);
@@ -71,6 +79,10 @@ int			ft_toupper(int c);
 double   	ft_round(double dbl, int precision);
 
 int			find_exponent(double dbl, int base);
+
+double		ft_fmod(double nb, double div);
+
+double		modf(double x, double *integer);
 
 char		*ft_dtoa_base(double dbl, int base, int precision);
 

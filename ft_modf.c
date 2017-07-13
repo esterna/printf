@@ -1,23 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnstr.c                                       :+:      :+:    :+:   */
+/*   ft_modf.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/31 20:53:35 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/26 15:28:24 by esterna          ###   ########.fr       */
+/*   Created: 2017/06/22 15:37:04 by esterna           #+#    #+#             */
+/*   Updated: 2017/06/22 15:38:50 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void			ft_putnstr(char *str, int n)
+double 			modf(double x, double *integer)
 {
-	while (n && *str)
-	{
-		ft_putchar(*str);
-		str++;
-		n--;
-	}
+	*integer = (int)x;
+	return (ft_fmod(x, 1.0));
 }

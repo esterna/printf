@@ -1,23 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnstr.c                                       :+:      :+:    :+:   */
+/*   ft_fmod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/31 20:53:35 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/26 15:28:24 by esterna          ###   ########.fr       */
+/*   Created: 2017/06/22 15:31:21 by esterna           #+#    #+#             */
+/*   Updated: 2017/06/22 15:31:24 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void			ft_putnstr(char *str, int n)
+double			ft_fmod(double nb, double div)
 {
-	while (n && *str)
-	{
-		ft_putchar(*str);
-		str++;
-		n--;
-	}
+	double	ret;
+	int		sign;
+
+	sign = nb < 0 ? -1 : 1;
+	if (div == 0 || nb * sign > 8e22 || div > 8e22 || div < -8e22)
+		return (1e60);
+	ret = nb - (div * (int)(nb / div));
+	if (ret * sign < 0)
+		ret *= -1;
+	return (ret);
 }

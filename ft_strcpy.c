@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_putnstr.c                                       :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/05/31 20:53:35 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/26 15:28:24 by esterna          ###   ########.fr       */
+/*   Created: 2017/01/29 01:37:20 by esterna           #+#    #+#             */
+/*   Updated: 2017/06/22 16:11:16 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-void			ft_putnstr(char *str, int n)
+char	*ft_strcpy(char *dest, const char *src)
 {
-	while (n && *str)
-	{
-		ft_putchar(*str);
-		str++;
-		n--;
-	}
+	char *cpydst;
+
+	cpydst = dest;
+	while (*src != 0)
+		*cpydst++ = *src++;
+	*cpydst = *src;
+	return (dest);
 }
