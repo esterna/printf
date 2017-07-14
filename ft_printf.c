@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/12 16:52:23 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/13 21:03:55 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ t_format				format_length(const char **current, t_format format)
 		format.size = -1;
 	else if (**current == 'l' && *(*current + 1) == 'l')
 		format.size = 2;
-	else if (**current == 'l')
+	else if (**current == 'l' || **current == 'L')
 		format.size = 1;
 	else if (**current == 'j')
 		format.size = 3;
@@ -285,6 +285,8 @@ t_format		printd(char *str, char ch, t_format format)
 	return (format);
 }
 
+/* My first setup for printf before beginning to Norme it.
+ *
 int				ft_printf(const char *current, ...)
 {
 	unsigned long int u;
@@ -296,12 +298,12 @@ int				ft_printf(const char *current, ...)
 	wint_t ch;
 	double dbl;
 	t_format format;
-	/**	void (*equ[127]) (void);**/
+	**	void (*equ[127]) (void);**
 	va_list arg;
 
 	va_start(arg, current);
 	format.n = 0;
-	/**equ['i'] = equ['d'] = equ['o'] = equ['x'] = equ['X'] = equ['u'] = &printi;**/
+	**equ['i'] = equ['d'] = equ['o'] = equ['x'] = equ['X'] = equ['u'] = &printi;**
 	while(*current)
 	{
 		format.pad = 0;
@@ -456,7 +458,7 @@ int				ft_printf(const char *current, ...)
 	va_end(arg);
 	return (format.n);
 }
-
+*/
 t_format		initialise_format(t_format format)
 {
 	format.pad = 0;
@@ -490,49 +492,7 @@ t_format		find_format(char **current, t_format format)
 	return (format);
 }
 
-t_format		parse_data(t_format format, va_list arg)
-{
-	char *tmp;
-	void *ptr;
-
-	if (format.specifier == 'p')
-	{
-		ptr = va_arg(arg, void *);
-		format.prefix = 1;
-		if (!ptr)
-			format = printi("0", 'p', format);
-		else
-			format = printi(ft_str_tolower(
-						ft_ulltoa_base((unsigned long int)ptr, 'p', 16)), 'p', format);	
-	}
-	else if (ft_strchr(PRINT_S_VALS, format.specifier))
-	{
-		if ((format.length == 1 && format.specifier == 'c') || format.specifier == 'C')
-			format = prints(NULL, va_arg(arg, wint_t), format);
-		else if ((format.length == 1 && format.specifier == 's') || format.specifier == 'S')
-			format = prints(va_arg(arg, wchar_t *), 'S', format);
-		else if (format.specifier == '%' || format.specifier == 'c')
-			format = prints(NULL, format.specifier, format);
-		else
-			format = prints(va_arg(arg, char *), 's', format);
-	}
-	else if (ft_strchr(PRINT_I_VALS, format.specifier))
-	{
-		tmp = (format.specifier == 'd' || format.specifier == 'i' || format.specifier == 'D') ? sort_d(format, arg) : sort_x(format, arg);
-		format = printi(tmp, format.specifier, format);
-	}
-	else if (ft_strchr(PRINT_D_VALS, format.specifier))
-		something
-	else
-	{
-		ft_putchar('%');
-		ft_putchar(format.specifier);
-		format.n += 2;
-	}
-	return (format);	
-}
-
-char			*sort_d(t_format format, va_list arg)
+char			*sort_i(t_format format, va_list arg)
 {
 	long long	i;
 	intmax_t	j;
@@ -571,7 +531,135 @@ char			*sort_d(t_format format, va_list arg)
 
 char			*sort_x(t_format format, va_list arg)
 {
+	int base;
 
+	base = (format.specifier == 'X' || format.specifier == 'x') ? 16 : 8;
+	if (format.length == 1 || format.specifier == 'X' || format.specifier == 'O')
+		return (ft_ulltoa_base(va_arg(arg, unsigned long int), 'p', base));
+	else if (format.length == -2)
+		return (ft_ulltoa_base(va_arg(arg, unsigned char), 'p', base));
+	else if (format.length == -1)
+		return (ft_ulltoa_base(va_arg(arg, unsigned short int), 'p', base));
+	else if (format.length == 0)
+		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base));
+	else if (format.length == 2)
+		return (ft_ulltoa_base(va_arg(arg, unsigned long long int), 'p', base));
+	else if (format.length == 3)
+		return (ft_ulltoa_base(va_arg(arg, uintmax_t), 'p', base));
+	else if (format.length == 4)
+		return (ft_ulltoa_base(va_arg(arg, size_t), 'p', base));
+}
+
+char			*sort_u(t_format format, va_list arg)
+{
+	if (format.length == 1 || format.specifier == 'U')
+		return (ft_ulltoa_base(va_arg(arg, unsigned long int), 'p', 10));
+	else if (format.length == -2)
+		return (ft_ulltoa_base(va_arg(arg, unsigned char), 'p',10));
+	else if (format.length == -1)
+		return (ft_ulltoa_base(va_arg(arg, unsigned short int), 'p', 10));
+	else if (format.length == 0)
+		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', 10));
+	else if (format.length == 2)
+		return (ft_ulltoa_base(va_arg(arg, unsigned long long int), 'p', 10));
+	else if (format.length == 3)
+		return (ft_ulltoa_base(va_arg(arg, uintmax_t), 'p', 10));
+	else if (format.length == 4)
+		return (ft_ulltoa_base(va_arg(arg, size_t), 'p', 10));
+}
+
+char			*sort_d(t_format format, va_list arg)
+{
+	char		*tmp;
+	long double	dbl;
+	int			base;
+
+	ldbl = va_arg(arg, long double);
+	base = (format.specifier == 'A' || format.specifier == 'a') ? 16 : 10;
+	if (format.specifier != 'a' && format.specifier != 'A')
+		format.precision = format.precision >= 0 ? format.precision : 6;
+	if (format.specifier == 'G' || format.specifier == 'g')
+	{
+		if (find_exponent(dbl, 10) < -4 || find_exponent(dbl, 10) >= format.precision)
+		{
+			tmp = ft_dtosf_base(dbl, 10, format.precision);
+			format.specifier = format.specifier - 2;
+		}
+		else
+		{
+			tmp = ft_dtoa_base(dbl, 10, format.precision);
+			format.specifier--;
+		}
+	}
+	else
+		tmp = ft_dtoa_base(dbl, base, format.precision);
+	if (65 <= format.specifier && format.specifier <= 90)
+		tmp = ft_str_toupper(tmp);
+	return (tmp);
+}
+
+void			sort_n(t_format format, va_list arg)
+{
+	else if (format.length == -2)
+		va_arg(arg, signed char *) = format.n;
+	else if (format.length == -1)
+		va_arg(arg, short int *) = format.n;
+	else if (format.length == 0)
+		va_arg(arg, int *) = format.n;
+	else if (format.length == 1)
+		va_arg(arg, long int *) = format.n;
+	else if (format.length == 2)
+		va_arg(arg, long long int *) = format.n;
+	else if (format.length == 3)
+		va_arg(arg, intmax_t *) = format.n;
+	else if (format.length == 4)
+		va_arg(arg, size_t *) = format.n;
+}
+
+t_format		parse_data(t_format format, va_list arg)
+{
+	char *tmp;
+	void *ptr;
+
+	if (format.specifier == 'p')
+	{
+		ptr = va_arg(arg, void *);
+		format.prefix = 1;
+		if (!ptr)
+			format = printi("0", 'p', format);
+		else
+			format = printi(ft_str_tolower(
+						ft_ulltoa_base((unsigned long int)ptr, 'p', 16)), 'p', format);	
+	}
+	else if (format.specifier == 'n')
+		sort_n(format, arg);
+	else if (ft_strchr(PRINT_S_VALS, format.specifier))
+	{
+		if ((format.length == 1 && format.specifier == 'c') || format.specifier == 'C')
+			format = prints(NULL, va_arg(arg, wint_t), format);
+		else if ((format.length == 1 && format.specifier == 's') || format.specifier == 'S')
+			format = prints(va_arg(arg, wchar_t *), 'S', format);
+		else if (format.specifier == '%' || format.specifier == 'c')
+			format = prints(NULL, format.specifier, format);
+		else
+			format = prints(va_arg(arg, char *), 's', format);
+	}
+	else if (ft_strchr(PRINT_I_VALS, format.specifier))
+	{
+		tmp = (format.specifier == 'd' || format.specifier == 'i' || format.specifier == 'D') ? sort_i(format, arg) : sort_x(format, arg);
+		format = printi(tmp, format.specifier, format);
+	}
+	else if (format.specifier == 'u' || format.specifier == 'U')
+		format = printi(sort_u(format, arg), format.specifier, format);
+	else if (ft_strchr(PRINT_D_VALS, format.specifier))
+		format = printd(sort_d(format, arg), format.specifier, format);
+	else
+	{
+		ft_putchar('%');
+		ft_putchar(format.specifier);
+		format.n += 2;
+	}
+	return (format);	
 }
 
 int				ft_printf(const char *current, ...)
