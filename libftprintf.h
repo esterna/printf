@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/12 15:54:36 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/20 17:20:18 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,16 @@
 # include <unistd.h>
 # include <stdarg.h>
 # include <math.h>
+# include <wchar.h>
 
 # define FLAGS "-+ #0"
 # define LENGTH "hljz"
+# define PRINT_S_VALS "SsCc%"
+# define PRINT_I_VALS "Ddi"
+# define PRINT_D_VALS "aAeEfFgG"
+# define PRINT_X_VALS "OoXx"
 
-typedef			struct s_format
+typedef	struct	s_format
 {
 	char	specifier;
 	int		pad;
@@ -30,62 +35,108 @@ typedef			struct s_format
 	int		prefix;
 	int		precision;
 	int		n;
-	int		size;
+	int		length;
 	char	*ptr;
-}				   		t_format;
+}				t_format;
 
-void		char_repeat(char ch, int n);
+int				ft_isdigit(int n);
 
-char		*ft_strnew(size_t size);
+/*
+** String manipulation
+*/
 
-char		*ft_dtosf_base(double dbl, int base, int precision);
+char			*ft_strchr(const char *str, int c);
 
-int			ft_printf(const char *format, ...);
+char			*ft_strcpy(char *dest, const char *src);
 
-int			ft_isdigit(int n);
+char			*ft_strdup(const char *src);
 
-char		*ft_itoa_base(int n, int base);
+size_t			ft_strlen(const char *str);
 
-char		*ft_ulltoa_base(unsigned long long n, char sign, int base);
+char			*ft_strnew(size_t size);
 
-void		ft_putchar(char c);
+char			*ft_str_tolower(char *str);
 
-void		ft_putnchar(char *str, int n);
+char			*ft_str_toupper(char *str);
 
-int			ft_nbrsize_base(int n, int base);
+int				ft_tolower(int c);
 
-void		ft_putnbr(int nb);
+int				ft_toupper(int c);
 
-char		*ft_strchr(const char *str, int c);
+/*
+** Conversion functions
+*/
 
-size_t		ft_strlen(const char *str);
+int				find_exponent(double dbl, int base);
 
-char		*ft_strdup(const char *src);
+char			*ft_dtoa_base(double dbl, int base, int precision);
 
-char		*ft_strcpy(char *dest, const char *src);
+char			*ft_dtosf_base(double dbl, int base, int precision);
 
-void		ft_putstr(char const *str);
+double			ft_fmod(double nb, double div);
 
-void		ft_putnstr(char *str, int n);
+char			*ft_itoa_base(int n, int base);
 
-char		*ft_str_tolower(char *str);
+double			ft_modf(double x, double *integer);
 
-char		*ft_str_toupper(char *str);
+double			ft_round(double dbl, int precision);
 
-int			ft_tolower(int c);
+char			*ft_ulltoa_base(unsigned long long n, char sign, int base);
 
-int			ft_toupper(int c);
+/*
+** Format Functions
+*/
 
-double   	ft_round(double dbl, int precision);
+t_format		find_format(char **current, t_format format);
 
-int			find_exponent(double dbl, int base);
+t_format		initialise_format(t_format format);
 
-double		ft_fmod(double nb, double div);
+t_format		format_length(char **current, t_format format);
 
-double		modf(double x, double *integer);
+t_format		format_precision(char **current, t_format format);
 
-char		*ft_dtoa_base(double dbl, int base, int precision);
+t_format		format_width(char **current, t_format format);
 
-char		*ft_dtosf_base(double dbl, int base, int precision);
+/*
+** Printing Functions
+*/
+
+void			char_repeat(char ch, int n);
+
+int				ft_printf(const char *format, ...);
+
+t_format		printd(char *str, char ch, t_format format);
+
+t_format		printi(char *str, char ch, t_format format);
+
+t_format		prints(char *str, char ch, t_format format);
+
+int				ft_nbrsize_base(int n, int base);
+
+void			ft_putchar(char c);
+
+void			ft_putnbr(int nb);
+
+void			ft_putnstr(char *str, int n);
+
+void			ft_putstr(char const *str);
+
+/*
+** Length Sorting Functions
+*/
+
+char			*sort_i(t_format format, va_list arg);
+
+char			*sort_d(t_format format, va_list arg);
+
+void			sort_n(t_format format, va_list arg);
+
+t_format		sort_p(t_format format, va_list arg);
+
+t_format		sort_s(t_format format, va_list arg);
+
+char			*sort_u(t_format format, va_list arg);
+
+char			*sort_x(t_format format, va_list arg);
 
 #endif

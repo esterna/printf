@@ -6,14 +6,14 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 19:27:58 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/26 15:18:17 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/20 15:41:17 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
 /*
-** This function finds the size of the part of the number 
+** This function finds the size of the part of the number
 ** before the decimal point.
 */
 
@@ -59,13 +59,16 @@ static char			*str_setup(double dbl, int base, int precision)
 }
 
 /*
-** This function adds the part of the number before the decimal to the given string.
+** This function adds the part of the number
+** before the decimal to the given string.
 */
 
-static void			part1(char *str, double dbl, int base, char *bstr)
+static void			part1(char *str, double dbl, int base)
 {
-	int n;
+	int		n;
+	char	*bstr;
 
+	bstr = "0123456789abcdef";
 	n = (int)dbl;
 	while (n)
 	{
@@ -76,16 +79,19 @@ static void			part1(char *str, double dbl, int base, char *bstr)
 }
 
 /*
-** This function adds the part of the number after the decimal, up to the given precision,
+** This function adds the part of the number
+** after the decimal, up to the given precision,
 ** to the given string.
 */
 
-static char			*part2(char *str, double dbl, int base, int precision, char *bstr)
+static char			*part2(char *str, double dbl, int base, int precision)
 {
-	int n;
-	int p;
-	double dtmp;
+	int		n;
+	int		p;
+	double	dtmp;
+	char	*bstr;
 
+	bstr = "0123456789abcdef";
 	dtmp = dbl - (int)dbl;
 	p = precision;
 	while (p--)
@@ -110,10 +116,8 @@ static char			*part2(char *str, double dbl, int base, int precision, char *bstr)
 char				*ft_dtoa_base(double dbl, int base, int precision)
 {
 	char	*sf;
-	char	*bstr;
-	char 	*tmp;
+	char	*tmp;
 
-	bstr = "0123456789abcdef";
 	if (base < 2)
 		return (NULL);
 	sf = str_setup(dbl, base, precision);
@@ -121,6 +125,6 @@ char				*ft_dtoa_base(double dbl, int base, int precision)
 			+ ((dbl < 0) ? 1 : 0) + ((base == 16) ? 2 : 0) - 1;
 	if (dbl < 0)
 		dbl *= -1;
-	part1(part2(tmp, dbl, base, precision, bstr), dbl, base, bstr);
+	part1(part2(tmp, dbl, base, precision), dbl, base);
 	return (sf);
 }

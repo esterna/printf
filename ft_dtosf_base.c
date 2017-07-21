@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/22 16:41:19 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/20 15:03:02 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 ** to the power of the result of find_exponent.
 */
 
-static double find_starting_point(double dbl, int base)
+static double		find_starting_point(double dbl, int base)
 {
-	int exp;
-	double div;
-	double b;
+	int		exp;
+	double	div;
+	double	b;
 
 	b = (base == 10) ? 10.0 : 2.0;
 	div = 1.0;
@@ -37,14 +37,14 @@ static double find_starting_point(double dbl, int base)
 		div = div / b;
 		exp++;
 	}
-	return (dbl/div);
+	return (dbl / div);
 }
 
-int			find_precision(double dbl, int base)
+int					find_precision(double dbl, int base)
 {
-	double start;
-	int tmp;
-	int n;
+	double	start;
+	int		tmp;
+	int		n;
 
 	n = 0;
 	start = find_starting_point(dbl, base);
@@ -75,16 +75,12 @@ static char			*str_setup(double dbl, int base, int precision)
 	int		len;
 
 	exp = find_exponent(dbl, base);
-	len = 4 + ((precision > 0) ? precision + 1 : 0)
-		+ ((dbl < 0) ? 1 : 0) + ((base == 16) ? 2 : 0)
-		+ ((exp > 9) ? 1 : 0);
+	len = 4 + ((precision > 0) ? precision + 1 : 0) + ((dbl < 0) ? 1 : 0)
+		+ ((base == 16) ? 2 : 0) + ((exp > 9) ? 1 : 0);
 	sf = ft_strnew(sizeof(char) * len);
-	if (dbl < 0.0)
-		*sf = '-';
+	*sf = (dbl < 0.0) ? '-' : '\0';
 	if (base == 10 && precision != 0)
-	{
 		*(sf + ((dbl < 0.0) ? 2 : 1)) = '.';
-	}
 	else if (base == 16)
 	{
 		*(sf + ((dbl < 0.0) ? 1 : 0)) = '0';
@@ -94,8 +90,7 @@ static char			*str_setup(double dbl, int base, int precision)
 	}
 	len--;
 	sf[len--] = (((exp < 0) ? exp * -1 : exp) % 10) + '0';
-	exp /= 10;
-	if (exp != 0)
+	if ((exp /= 10) != 0)
 		sf[len--] = ((exp < 0) ? exp * -1 : exp) + '0';
 	sf[len--] = (find_exponent(dbl, base) >= 0) ? '+' : '-';
 	sf[len--] = (base == 10) ? 'e' : 'p';
@@ -105,7 +100,7 @@ static char			*str_setup(double dbl, int base, int precision)
 static char			*nan_inf(double dbl)
 {
 	if (dbl == INFINITY)
-		return(ft_strdup("inf"));
+		return (ft_strdup("inf"));
 	else if (dbl == -INFINITY)
 		return (ft_strdup("-inf"));
 	else if (dbl == NAN)
@@ -113,11 +108,11 @@ static char			*nan_inf(double dbl)
 	return (ft_strdup("-nan"));
 }
 
-char			*ft_dtosf_base(double dbl, int base, int precision)
+char				*ft_dtosf_base(double dbl, int base, int precision)
 {
 	char	*sf;
 	char	*bstr;
-	char 	*tmp;
+	char	*tmp;
 
 	bstr = "0123456789abcdef";
 	if (base < 2)

@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/06/26 14:04:07 by esterna          ###   ########.fr        #
+#    Updated: 2017/07/13 22:03:17 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ $(NAME):
 	ranlib $@.a
 
 exe:
-	gcc $(CFLAGS) -g -o printf main_test.c ft_printf.c ft_dtoa_base.c ft_fmod.c libftprintf.a
+	gcc $(CFLAGS) -g -o printf main_test.c ft_printf.c libftprintf.a
 
 clean:
 	/bin/rm -f $(OBJ)

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 19:08:21 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/06 21:23:02 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/20 14:20:53 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ static char			*str_setup(unsigned long long n, char sign, int base)
 		*nbr = '-';
 	return (nbr);
 }
-
 
 char				*ft_ulltoa_base(unsigned long long n, char sign, int base)
 {
