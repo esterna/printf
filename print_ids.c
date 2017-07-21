@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 22:00:55 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 17:42:45 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/20 19:48:10 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,7 @@ t_format				printi(char *str, char ch, t_format format)
 	}
 	if (!(prec == 0 && *str != '0'))
 		ft_putstr(str);
-	if (width)
-		char_repeat(wch, width);
+	char_repeat(wch, width);
 	return (format);
 }
 

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/21 16:38:07 by esterna           #+#    #+#             */
-/*   Updated: 2017/06/21 16:40:10 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/20 19:47:35 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void			char_repeat(char ch, int n)
 {
-	while (n)
+	while (n > 0)
 	{
 		ft_putchar(ch);
 		n--;
