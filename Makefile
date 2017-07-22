@@ -6,14 +6,14 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/07/22 16:34:45 by esterna          ###   ########.fr        #
+#    Updated: 2017/07/22 16:42:04 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf
 CFLAGS = -Wall -Wextra -Werror
-DEPS = includes/libftprintf.h
-_FUNCTIONS = char_repeat.c\
+DEPS = libftprintf.h
+FUNCTIONS = char_repeat.c\
 			find_exponent.c\
 			format_setup.c\
 			ft_dtoa_base.c\
@@ -42,7 +42,6 @@ _FUNCTIONS = char_repeat.c\
 			print_ids.c\
 			sort_dniux.c\
 			sort_ps.c
-FUNCTIONS = $(patsubt %,src/%,$(_FUNCTIONS))
 OBJ = $(FUNCTIONS:.c=.o)
 
 all: $(NAME)
