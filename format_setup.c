@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 21:55:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/21 18:08:36 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/22 16:10:35 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 t_format			format_width(char **current, t_format format)
 {
-	while (ft_strchr(FLAGS, **current))
+	while (ft_strchr(FLAGS, **current) && **current != '\0')
 	{
 		if (**current == '-')
 			format.pad = 1;
@@ -109,19 +109,35 @@ t_format			format_precision(char **current, t_format format)
 t_format			format_length(char **current, t_format format)
 {
 	if (**current == 'h' && *(*current + 1) == 'h')
-		format.length = -2;
-	else if (**current == 'h')
-		format.length = -1;
-	else if (**current == 'l' && *(*current + 1) == 'l')
-		format.length = 2;
-	else if (**current == 'l' || **current == 'L')
-		format.length = 1;
-	else if (**current == 'j')
-		format.length = 3;
-	else if (**current == 'z')
-		format.length = 4;
-	while (ft_strchr(LENGTH, **current))
+	{
+		(*current) += 2;
+		format.length = (format.length == 0) ? -2 : format.length;
+	}
+	if (**current == 'h')
+	{	
 		(*current)++;
+		format.length = (format.length == 0 || format.length < -1) ? -1 : format.length;
+	}
+	if (**current == 'l' && *(*current + 1) == 'l')
+	{
+		(*current) += 2;
+		format.length = (format.length == 0 || format.length < 2) ? 2 : format.length;
+	}
+	if (**current == 'l' || **current == 'L')
+	{
+		(*current)++;
+		format.length = (format.length == 0 || format.length < 1) ? 1 : format.length;
+	}
+	if (**current == 'j')
+	{
+		(*current)++;
+		format.length = (format.length == 0 || format.length < 3) ? 3 : format.length;
+	}
+	if (**current == 'z')
+	{
+		(*current)++;
+		format.length = 4;
+	}
 	return (format);
 }
 
@@ -139,11 +155,14 @@ t_format			initialise_format(t_format format)
 
 t_format			find_format(char **current, t_format format)
 {
-	if (ft_strchr(FLAGS, **current) || ft_isdigit(**current))
-		format = format_width(current, format);
-	if (**current == '.')
-		format = format_precision(current, format);
-	if (ft_strchr(LENGTH, **current))
-		format = format_length(current, format);
+	while ((ft_strchr(FLAGS, **current) || ft_isdigit(**current) || **current == '.' || ft_strchr(LENGTH, **current)) && **current != '\0')
+	{
+		if (ft_strchr(FLAGS, **current) || ft_isdigit(**current))
+			format = format_width(current, format);
+		if (**current == '.')
+			format = format_precision(current, format);
+		if (ft_strchr(LENGTH, **current) && **current != '\0')
+			format = format_length(current, format);
+	}
 	return (format);
 }

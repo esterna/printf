@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 22:00:55 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/21 21:43:59 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/22 15:29:19 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int				find_width(char *str, char ch, t_format format)
 	int	strlen;
 	int prec;
 
-	prec = format.precision - ft_strlen(str);	
+	prec = format.precision - ft_strlen(str) + ((*str == '-') ? 1 : 0);	
 	width = format.width;
 	strlen = ft_strlen(str)
 				+ ((prec > 0) ? prec : 0)
@@ -43,17 +43,17 @@ t_format				printi(char *str, char ch, t_format format)
 
 	prec = format.precision - ft_strlen(str) + ((*str == '-') ? 1 : 0);
 	width = find_width(str, ch, format);
-	wch = (format.pad <= 1) ? ' ' : '0';
+	wch = (format.pad <= 1 || prec > 0) ? ' ' : '0';
 	format.n += ((prec > 0) ? prec : 0) +
 				((width > 0) ? width : 0) + ft_strlen(str) -
 				((format.precision == 0 && *str == '0') ? 1 : 0) +
-				((format.sign && *str != '-') ? 1 : 0);
-	if (format.pad == 0)
+				((format.sign && *str != '-' && ch != 'u') ? 1 : 0);
+	if (format.pad == 0 || (format.pad == 2 && wch == ' '))
 	{
 		char_repeat(wch, width);
 		width = 0;	
 	}
-	if (format.sign && *str != '-')
+	if (format.sign != 0 && *str != '-' && ch != 'u')
 		ft_putchar((format.sign == 1) ? ' ' : '+');
 	else if (*str == '-' && wch == '0')
 	{
@@ -77,10 +77,11 @@ t_format				printi(char *str, char ch, t_format format)
 		char_repeat(wch, width);
 		width = 0;
 	}
-	if (prec > 0 && *str != '0')
-		char_repeat('0', prec);
 	if (!(format.precision == 0 && *str == '0'))
+	{
+		char_repeat('0', prec);
 		ft_putstr(str);
+	}
 	char_repeat(wch, width);
 	return (format);
 }

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:34:22 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/21 15:49:05 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/22 15:23:43 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,30 @@ char			*sort_i(t_format format, va_list arg)
 	intmax_t	j;
 	size_t		s;
 
-	if (format.length == -2 || format.length == -1)
-		return (ft_itoa_base(va_arg(arg, int), 10));
+	if (format.length == -2)
+		return (ft_itoa_base((signed char)va_arg(arg, int), 10));
+	else if( format.length == -1)
+		return (ft_itoa_base((short)va_arg(arg, int), 10));
 	else if (0 <= format.length && format.length <= 2)
 	{
 		if (format.length == 1 || format.specifier == 'D')
 			i = va_arg(arg, long int);
 		else
-			i = format.length ? va_arg(arg, long long) : va_arg(arg, int);
+			i = format.length != 0 ? va_arg(arg, long long) : va_arg(arg, int);
 		return (ft_ulltoa_base(((i >= 0) ? i : i * -1),
 					((i >= 0) ? 'p' : 'n'), 10));
 	}
-	else if (format.length == 3 && (j = va_arg(arg, intmax_t)))
+	else if (format.length == 3)
+	{
+		j = va_arg(arg, intmax_t);
 		return (ft_ulltoa_base(((j >= 0) ? j : j * -1),
 					((j >= 0) ? 'p' : 'n'), 10));
-	else if (format.length == 4 && (s = va_arg(arg, size_t)))
+	}
+	else if (format.length == 4)
+	{
+		s = va_arg(arg, size_t);
 		return (ft_ulltoa_base(s, 'p', 10));
+	}
 	return (NULL);
 }
 

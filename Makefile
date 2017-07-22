@@ -6,14 +6,14 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/07/22 16:42:04 by esterna          ###   ########.fr        #
+#    Updated: 2017/07/20 20:43:13 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf
 CFLAGS = -Wall -Wextra -Werror
 DEPS = libftprintf.h
-FUNCTIONS = char_repeat.c\
+FUNCTIONS =	char_repeat.c\
 			find_exponent.c\
 			format_setup.c\
 			ft_dtoa_base.c\

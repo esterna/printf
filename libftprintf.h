@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 17:20:18 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/22 15:54:50 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # include <math.h>
 # include <wchar.h>
 
+# define SPECS "%sSpdDioOuUxXcCeEfFgGaAbrk"
 # define FLAGS "-+ #0"
 # define LENGTH "hljz"
 # define PRINT_S_VALS "SsCc%"
