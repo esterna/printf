@@ -6,11 +6,30 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 22:00:55 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 19:48:10 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/21 21:43:59 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+
+
+static int				find_width(char *str, char ch, t_format format)
+{
+	int width;
+	int	strlen;
+	int prec;
+
+	prec = format.precision - ft_strlen(str);	
+	width = format.width;
+	strlen = ft_strlen(str)
+				+ ((prec > 0) ? prec : 0)
+				+ (((ch == 'o' || ch == 'O') && format.prefix) ? 1 : 0)
+				+ (((ch == 'x' || ch == 'X') && format.prefix) ? 2 : 0)
+				- ((format.precision == 0 && *str == '0') ? 1 : 0)
+				+ ((format.sign && *str != '-') ? 1 : 0);
+	width = width - strlen;
+	return (width);
+}
 
 /*
 ** Prints all number specifiers with precision and width applied.
@@ -22,11 +41,18 @@ t_format				printi(char *str, char ch, t_format format)
 	int		width;
 	char	wch;
 
-	prec = format.precision - ft_strlen(str);
-	width = format.width - (ft_strlen(str) + ((prec > 0) ? prec : 0));
+	prec = format.precision - ft_strlen(str) + ((*str == '-') ? 1 : 0);
+	width = find_width(str, ch, format);
 	wch = (format.pad <= 1) ? ' ' : '0';
 	format.n += ((prec > 0) ? prec : 0) +
-				((width > 0) ? width : 0) + ft_strlen(str);
+				((width > 0) ? width : 0) + ft_strlen(str) -
+				((format.precision == 0 && *str == '0') ? 1 : 0) +
+				((format.sign && *str != '-') ? 1 : 0);
+	if (format.pad == 0)
+	{
+		char_repeat(wch, width);
+		width = 0;	
+	}
 	if (format.sign && *str != '-')
 		ft_putchar((format.sign == 1) ? ' ' : '+');
 	else if (*str == '-' && wch == '0')
@@ -34,14 +60,7 @@ t_format				printi(char *str, char ch, t_format format)
 		ft_putchar(*str);
 		str++;
 	}
-	if ((!format.pad || format.pad == 2) && width > 0)
-	{
-		char_repeat(wch, width);
-		width = 0;
-	}
-	if (prec > 0 && *str != '0')
-		char_repeat('0', prec);
-	if (format.prefix && (*str != '0' || ch == 'p'))
+	if (format.prefix && ch != 'p' && !((ch == 'x' || ch == 'X') && *str == '0'))
 	{
 		ft_putchar('0');
 		format.n++;
@@ -51,7 +70,16 @@ t_format				printi(char *str, char ch, t_format format)
 			format.n++;
 		}
 	}
-	if (!(prec == 0 && *str != '0'))
+	if (*str == '-' && str++)
+			ft_putchar('-');
+	if ((format.pad == 2 || format.pad == 3) && width > 0)
+	{
+		char_repeat(wch, width);
+		width = 0;
+	}
+	if (prec > 0 && *str != '0')
+		char_repeat('0', prec);
+	if (!(format.precision == 0 && *str == '0'))
 		ft_putstr(str);
 	char_repeat(wch, width);
 	return (format);
@@ -65,7 +93,7 @@ t_format				prints(char *str, char ch, t_format format)
 {
 	char wch;
 
-	format.width = format.width - ((!str) ? 6 :
+	format.width = format.width - ((!str) ? 1 :
 			((format.precision < 0 || format.precision > (int)ft_strlen(str))
 			? ft_strlen(str) : format.precision));
 	wch = (format.pad <= 1) ? ' ' : '0';

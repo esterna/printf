@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 19:08:21 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 14:20:53 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/21 15:11:31 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char				*ft_ulltoa_base(unsigned long long n, char sign, int base)
 	char	*nbr;
 	char	*bstr;
 
-	bstr = "0123456789ABCDEF";
+	bstr = "0123456789abcdef";
 	if (base < 2)
 		return (NULL);
 	len = nbr_size(n, sign, base) - 2;

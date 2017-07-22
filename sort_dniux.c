@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:34:22 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 17:36:43 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/21 15:49:05 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,25 +39,27 @@ char			*sort_i(t_format format, va_list arg)
 
 char			*sort_x(t_format format, va_list arg)
 {
-	int base;
+	char	*tmp;
+	int		base;
 
 	base = (format.specifier == 'X' || format.specifier == 'x') ? 16 : 8;
-	if (format.length == 1 || format.specifier == 'X'
-			|| format.specifier == 'O')
-		return (ft_ulltoa_base(va_arg(arg, unsigned long int), 'p', base));
+	if (format.length == 1)
+		tmp = ft_ulltoa_base(va_arg(arg, unsigned long), 'p', base);
 	else if (format.length == -2)
-		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base));
+		tmp = ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base);
 	else if (format.length == -1)
-		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base));
+		tmp = ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base);
 	else if (format.length == 0)
-		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base));
+		tmp = ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base);
 	else if (format.length == 2)
-		return (ft_ulltoa_base(va_arg(arg, unsigned long long int), 'p', base));
+		tmp = ft_ulltoa_base(va_arg(arg, unsigned long long int), 'p', base);
 	else if (format.length == 3)
-		return (ft_ulltoa_base(va_arg(arg, uintmax_t), 'p', base));
+		tmp = ft_ulltoa_base(va_arg(arg, uintmax_t), 'p', base);
 	else if (format.length == 4)
-		return (ft_ulltoa_base(va_arg(arg, size_t), 'p', base));
-	return (NULL);
+		tmp = ft_ulltoa_base(va_arg(arg, size_t), 'p', base);
+	if (65 <= format.specifier && format.specifier <= 90)
+		return (ft_str_toupper(tmp));
+	return (tmp);
 }
 
 char			*sort_u(t_format format, va_list arg)

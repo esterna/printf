@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 19:38:58 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/21 18:05:11 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ int				ft_printf(const char *current, ...)
 
 	format.n = 0;
 	va_start(arg, current);
-	format = initialise_format(format);
 	while (*current)
 	{
+		format = initialise_format(format);
 		format = print_curr((char **)&current, format);
 		if (!*current)
 			break ;

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 21:55:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 17:15:45 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/21 18:08:36 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ t_format			format_width(char **current, t_format format)
 	while (ft_strchr(FLAGS, **current))
 	{
 		if (**current == '-')
-			format.pad += 1;
-		if (**current == '0')
-			format.pad += 2;
+			format.pad = 1;
+		if (**current == '0' && format.pad == 0)
+			format.pad = 2;
 		if (**current == ' ')
 			if (!format.sign)
 				format.sign = 1;
@@ -133,6 +133,7 @@ t_format			initialise_format(t_format format)
 	format.prefix = 0;
 	format.precision = -1;
 	format.length = 0;
+	format.ptr = NULL;
 	return (format);
 }
 
