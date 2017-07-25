@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 22:00:55 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/22 15:29:19 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/24 17:26:24 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ t_format				printi(char *str, char ch, t_format format)
 
 	prec = format.precision - ft_strlen(str) + ((*str == '-') ? 1 : 0);
 	width = find_width(str, ch, format);
-	wch = (format.pad <= 1 || prec > 0) ? ' ' : '0';
+	wch = (format.pad <= 1 || format.precision >= 0) ? ' ' : '0';
 	format.n += ((prec > 0) ? prec : 0) +
 				((width > 0) ? width : 0) + ft_strlen(str) -
 				((format.precision == 0 && *str == '0') ? 1 : 0) +
@@ -60,7 +60,7 @@ t_format				printi(char *str, char ch, t_format format)
 		ft_putchar(*str);
 		str++;
 	}
-	if (format.prefix && ch != 'p' && !((ch == 'x' || ch == 'X') && *str == '0'))
+	if (format.prefix && ft_strchr(PRINT_X_VALS, ch) && *str != '0')
 	{
 		ft_putchar('0');
 		format.n++;
@@ -81,6 +81,11 @@ t_format				printi(char *str, char ch, t_format format)
 	{
 		char_repeat('0', prec);
 		ft_putstr(str);
+	}
+	if ((format.specifier == 'o' || format.specifier == 'O') && format.prefix == 1 && format.precision == 0 && *str == '0')
+	{
+		ft_putstr(str);
+		format.n++;
 	}
 	char_repeat(wch, width);
 	return (format);

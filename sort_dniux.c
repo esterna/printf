@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:34:22 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/22 15:23:43 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/24 19:49:53 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,9 +75,9 @@ char			*sort_u(t_format format, va_list arg)
 	if (format.length == 1 || format.specifier == 'U')
 		return (ft_ulltoa_base(va_arg(arg, unsigned long int), 'p', 10));
 	else if (format.length == -2)
-		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', 10));
+		return (ft_ulltoa_base((unsigned char)va_arg(arg, unsigned int), 'p', 10));
 	else if (format.length == -1)
-		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', 10));
+		return (ft_ulltoa_base((unsigned short)va_arg(arg, unsigned int), 'p', 10));
 	else if (format.length == 0)
 		return (ft_ulltoa_base(va_arg(arg, unsigned int), 'p', 10));
 	else if (format.length == 2)
