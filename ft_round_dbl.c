@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 14:22:13 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 14:34:22 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/25 22:41:18 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,29 @@
 ** of places after the decimal point, given by the precision.
 */
 
-double			ft_round(double dbl, int precision)
+double			ft_round_dbl(double dbl, int precision)
 {
-	int		n1;
-	int		n2;
-	int		p;
-	double	dec;
-	double	tmp;
+	long		n;
+	long		p;
+	double		tmp;
+	double		fac;
+	double		result;
 
-	dec = 1;
-	tmp = dbl;
+	tmp = (dbl >= 0) ? dbl : dbl * -1;
+	fac = pow(10, precision + 1);
 	precision = (precision <= 0) ? 0 : precision;
-	p = precision;
-	n1 = (precision == 0) ? ((int)dbl) % 10 : 0;
+	p = precision + 1;
+	n = (precision == 0) ? ((long)dbl) % 10 : 0;
 	while (p)
 	{
-		tmp = (tmp - (int)((float)tmp)) * 10;
-		n1 = (p == 1) ? (int)tmp : n1;
+		tmp = (tmp - (long)tmp) * 10;
+		n = (p == 1) ? (long)tmp : n;
 		p--;
 	}
-	tmp = (tmp - (int)((float)tmp)) * 10;
-	n2 = (int)tmp;
-	while (precision-- && dec != 0)
-		dec = dec / 10;
-	dbl = (int)((float)(dbl / dec)) * dec;
-	dbl = (n2 > n1) ? dbl + dec : dbl;
-	return (dbl);
+	result = 5 / fac;
+	if (n < 5)
+		return (dbl);
+	if (dbl < 0)
+		return (dbl - result);
+	return (dbl + result);
 }

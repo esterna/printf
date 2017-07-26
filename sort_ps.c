@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:32:23 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/21 18:27:42 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/25 22:50:00 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 t_format		sort_s(t_format format, va_list arg)
 {
+	char *str;
+
 	if ((format.length == 1 && format.specifier == 'c')
 			|| format.specifier == 'C')
 		format = prints(NULL, va_arg(arg, wint_t), format);
@@ -25,7 +27,10 @@ t_format		sort_s(t_format format, va_list arg)
 	else if (format.specifier == 'c')
 		format = prints(NULL, va_arg(arg, int), format);
 	else
-		format = prints(va_arg(arg, char *), 's', format);
+	{
+		str = va_arg(arg, char *);
+		format = prints((!str) ? "(null)" : str, 's', format);
+	}
 	return (format);
 }
 

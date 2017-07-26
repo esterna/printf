@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/07/20 20:43:13 by esterna          ###   ########.fr        #
+#    Updated: 2017/07/25 22:11:04 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,12 +23,14 @@ FUNCTIONS =	char_repeat.c\
 			ft_itoa_base.c\
 			ft_modf.c\
 			ft_nbrsize_base.c\
+			ft_pow.c\
 			ft_printf.c\
 			ft_putchar.c\
 			ft_putnbr.c\
 			ft_putnstr.c\
 			ft_putstr.c\
 			ft_round_dbl.c\
+			ft_round.c\
 			ft_str_tolower.c\
 			ft_str_toupper.c\
 			ft_strchr.c\

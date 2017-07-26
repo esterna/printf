@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 19:27:58 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/20 15:41:17 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/25 18:09:06 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int			dbl_size(double dbl, int base)
 	n = 1;
 	if (dbl < 0)
 		dbl *= -1;
-	dbl = (int)dbl;
+	dbl = (long long)dbl;
 	while (dbl > 9)
 	{
 		dbl /= base;
@@ -42,8 +42,8 @@ static int			dbl_size(double dbl, int base)
 
 static char			*str_setup(double dbl, int base, int precision)
 {
-	char	*sf;
-	int		len;
+	char			*sf;
+	long long		len;
 
 	len = dbl_size(dbl, base) + ((precision > 0) ? precision + 1 : 0)
 			+ ((dbl < 0) ? 1 : 0) + ((base == 16) ? 2 : 0);
@@ -65,11 +65,11 @@ static char			*str_setup(double dbl, int base, int precision)
 
 static void			part1(char *str, double dbl, int base)
 {
-	int		n;
-	char	*bstr;
+	long long	n;
+	char		*bstr;
 
 	bstr = "0123456789abcdef";
-	n = (int)dbl;
+	n = (long long)dbl;
 	while (n)
 	{
 		*str = bstr[n % base];
@@ -86,17 +86,17 @@ static void			part1(char *str, double dbl, int base)
 
 static char			*part2(char *str, double dbl, int base, int precision)
 {
-	int		n;
-	int		p;
-	double	dtmp;
-	char	*bstr;
+	long long	n;
+	int			p;
+	double		dtmp;
+	char		*bstr;
 
 	bstr = "0123456789abcdef";
-	dtmp = dbl - (int)dbl;
+	dtmp = dbl - (long long)dbl;
 	p = precision;
 	while (p--)
 		dtmp *= 10;
-	n = (int)dtmp;
+	n = (long long)dtmp;
 	p = precision;
 	while (p)
 	{

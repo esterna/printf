@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 22:00:55 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/24 17:26:24 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/25 22:54:37 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,36 @@ static int				find_width(char *str, char ch, t_format format)
 	strlen = ft_strlen(str)
 				+ ((prec > 0) ? prec : 0)
 				+ (((ch == 'o' || ch == 'O') && format.prefix) ? 1 : 0)
-				+ (((ch == 'x' || ch == 'X') && format.prefix) ? 2 : 0)
+				+ (((ch == 'x' || ch == 'X' || ch == 'p') && format.prefix) ? 2 : 0)
 				- ((format.precision == 0 && *str == '0') ? 1 : 0)
 				+ ((format.sign && *str != '-') ? 1 : 0);
 	width = width - strlen;
 	return (width);
+}
+
+static t_format			put_prefix(char *str, char ch, t_format format)
+{
+	if (!(ft_strchr(PRINT_X_VALS, ch) || ch == 'p') || format.prefix == 0)
+		return (format);
+	if (ch == 'p')
+	{
+		ft_putstr("0x");
+		format.n += 2;
+	}
+	else if (*str == '0')
+		return (format);
+	else if (ch == 'o' || ch == 'O')
+	{
+		ft_putchar('0');
+		format.n++;
+	}
+	else if (ch == 'X' || ch == 'x')
+	{
+		ft_putchar('0');
+		ft_putchar(ch);
+		format.n += 2;
+	}
+	return (format);
 }
 
 /*
@@ -60,18 +85,7 @@ t_format				printi(char *str, char ch, t_format format)
 		ft_putchar(*str);
 		str++;
 	}
-	if (format.prefix && ft_strchr(PRINT_X_VALS, ch) && *str != '0')
-	{
-		ft_putchar('0');
-		format.n++;
-		if (ch != 'o')
-		{
-			ft_putchar(ch);
-			format.n++;
-		}
-	}
-	if (*str == '-' && str++)
-			ft_putchar('-');
+	format = put_prefix(str, ch, format);
 	if ((format.pad == 2 || format.pad == 3) && width > 0)
 	{
 		char_repeat(wch, width);
@@ -79,6 +93,8 @@ t_format				printi(char *str, char ch, t_format format)
 	}
 	if (!(format.precision == 0 && *str == '0'))
 	{
+		if(*str == '-' && str++)
+			ft_putchar('-');	
 		char_repeat('0', prec);
 		ft_putstr(str);
 	}
@@ -99,22 +115,18 @@ t_format				prints(char *str, char ch, t_format format)
 {
 	char wch;
 
+	wch = ch;
 	format.width = format.width - ((!str) ? 1 :
 			((format.precision < 0 || format.precision > (int)ft_strlen(str))
 			? ft_strlen(str) : format.precision));
-	wch = (format.pad <= 1) ? ' ' : '0';
+	wch = ' ';
 	while ((!format.pad || format.pad == 2) && format.width > 0)
 	{
-		ft_putchar(wch);
-		format.width--;
-		format.n++;
+		char_repeat(wch, format.width);
+		format.n += format.width;
+		format.width = 0;
 	}
-	if (!str && ch == 's')
-	{
-		ft_putstr("(null)");
-		format.n += 6;
-	}
-	else if (!str)
+	if (!str)
 	{
 		ft_putchar(ch);
 		format.n++;
@@ -137,11 +149,10 @@ t_format				prints(char *str, char ch, t_format format)
 			}
 		}
 	}
-	while (format.width > 0)
+	if (format.width > 0)
 	{
-		ft_putchar(wch);
-		format.width--;
-		format.n++;
+		char_repeat(wch, format.width);
+		format.n += format.width;;
 	}
 	return (format);
 }

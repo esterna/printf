@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:34:22 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/24 19:49:53 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/25 16:54:25 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ char			*sort_i(t_format format, va_list arg)
 {
 	long long	i;
 	intmax_t	j;
-	size_t		s;
 
 	if (format.length == -2)
 		return (ft_itoa_base((signed char)va_arg(arg, int), 10));
@@ -39,8 +38,9 @@ char			*sort_i(t_format format, va_list arg)
 	}
 	else if (format.length == 4)
 	{
-		s = va_arg(arg, size_t);
-		return (ft_ulltoa_base(s, 'p', 10));
+		i = va_arg(arg, long long);
+		return (ft_ulltoa_base(((i >= 0) ? i : i * -1),
+					((i >= 0) ? 'p' : 'n'), 10));
 	}
 	return (NULL);
 }
@@ -54,9 +54,9 @@ char			*sort_x(t_format format, va_list arg)
 	if (format.length == 1)
 		tmp = ft_ulltoa_base(va_arg(arg, unsigned long), 'p', base);
 	else if (format.length == -2)
-		tmp = ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base);
+		tmp = ft_ulltoa_base((unsigned char)va_arg(arg, unsigned int), 'p', base);
 	else if (format.length == -1)
-		tmp = ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base);
+		tmp = ft_ulltoa_base((unsigned short)va_arg(arg, unsigned int), 'p', base);
 	else if (format.length == 0)
 		tmp = ft_ulltoa_base(va_arg(arg, unsigned int), 'p', base);
 	else if (format.length == 2)
@@ -95,10 +95,11 @@ char			*sort_d(t_format format, va_list arg)
 	long double	dbl;
 	int			base;
 
-	dbl = va_arg(arg, long double);
+	dbl = (format.length == 0) ? va_arg(arg, double) : va_arg(arg, long double);
 	base = (format.specifier == 'A' || format.specifier == 'a') ? 16 : 10;
 	if (format.specifier != 'a' && format.specifier != 'A')
 		format.precision = format.precision >= 0 ? format.precision : 6;
+	dbl = ft_round_dbl(dbl, format.precision);
 	if (format.specifier == 'G' || format.specifier == 'g')
 	{
 		tmp = ft_dtosf_base(dbl, 10, format.precision);

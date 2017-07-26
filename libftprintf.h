@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/22 15:54:50 by esterna          ###   ########.fr       */
+/*   Updated: 2017/07/25 22:10:41 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,11 @@ char			*ft_itoa_base(int n, int base);
 
 double			ft_modf(double x, double *integer);
 
-double			ft_round(double dbl, int precision);
+double			ft_pow(double base, double exp);
+
+double			ft_round(double dbl);
+
+double			ft_round_dbl(double dbl, int precision);
 
 char			*ft_ulltoa_base(unsigned long long n, char sign, int base);
 
