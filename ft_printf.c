@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/05 18:38:35 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/05 19:05:38 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_format		parse_data(t_format format, va_list arg)
 		format = sort_p(format, arg);
 	else if (format.specifier == 'n')
 		sort_n(format, arg);
-	else if (ft_strchr(PRINT_S_VALS, format.specifier))
+/*	else if (ft_strchr(PRINT_S_VALS, format.specifier))
 		format = sort_s(format, arg);
 	else if (ft_strchr(PRINT_I_VALS, format.specifier))
 		format = printi(sort_i(format, arg), format.specifier, format);
@@ -37,7 +37,7 @@ t_format		parse_data(t_format format, va_list arg)
 	else if (format.specifier == 'u' || format.specifier == 'U')
 		format = printi(sort_u(format, arg), format.specifier, format);
 	else if (ft_strchr(PRINT_D_VALS, format.specifier))
-		format = printd(sort_d(format, arg), format.specifier, format);
+		format = printd(sort_d(format, arg), format.specifier, format);*/
 	else
 	{
 		ft_putchar('%');
@@ -65,7 +65,7 @@ int				ft_printf(const char *current, ...)
 
 	format.n = 0;
 	va_start(arg, current);
-/*	while (*current)
+	while (*current)
 	{
 		format = initialise_format(format);
 		format = print_curr((char **)&current, format);
@@ -81,7 +81,7 @@ int				ft_printf(const char *current, ...)
 			format = parse_data(format, arg);
 			current++;
 		}
-	}*/
+	}
 	va_end(arg);
 	return (format.n);
 }
