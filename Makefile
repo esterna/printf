@@ -6,12 +6,12 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/05 18:10:23 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/05 18:14:44 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address
+CFLAGS = -Wall -Wextra -Werror
 DEPS = libftprintf.h
 FUNCTIONS =	char_repeat.c\
 			find_exponent.c\

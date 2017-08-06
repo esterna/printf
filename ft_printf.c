@@ -6,24 +6,24 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/05 18:09:28 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/05 18:14:26 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-t_format	(*pr[2]) (char *str, char ch, t_format format);
+/*t_format	(*pr[2]) (char *str, char ch, t_format format);
 
-char*		(*sort[4]) (t_format format, va_list arg);
+char*		(*sort[4]) (t_format format, va_list arg);*/
 
 t_format		parse_data(t_format format, va_list arg)
 {
-	pr[0] = printi;
+/*	pr[0] = printi;
 	pr[1] = printd;
 	sort[0] = sort_i;
 	sort[1] = sort_x;
 	sort[2] = sort_u;
-	sort[3] = sort_d;
+	sort[3] = sort_d;*/
 	if (format.specifier == 'p')
 		format = sort_p(format, arg);
 	else if (format.specifier == 'n')
