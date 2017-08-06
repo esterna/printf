@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/05 19:05:38 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/05 19:08:23 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,9 @@ t_format		parse_data(t_format format, va_list arg)
 	else if (ft_strchr(PRINT_X_VALS, format.specifier))
 		format = printi(sort_x(format, arg), format.specifier, format);
 	else if (format.specifier == 'u' || format.specifier == 'U')
-		format = printi(sort_u(format, arg), format.specifier, format);
+		format = printi(sort_u(format, arg), format.specifier, format);*/
 	else if (ft_strchr(PRINT_D_VALS, format.specifier))
-		format = printd(sort_d(format, arg), format.specifier, format);*/
+		format = printd(sort_d(format, arg), format.specifier, format);
 	else
 	{
 		ft_putchar('%');
