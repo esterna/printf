@@ -6,12 +6,12 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/05 17:36:09 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/05 18:10:23 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=address
 DEPS = libftprintf.h
 FUNCTIONS =	char_repeat.c\
 			find_exponent.c\
@@ -61,7 +61,7 @@ $(NAME):
 	@ranlib $@.a
 
 exe:
-	@gcc $(CFLAGS) -g -o printf main_test.c $(FUNCTIONS)
+	@gcc $(CFLAGS) -o printf main_test.c $(FUNCTIONS)
 
 clean:
 	@/bin/rm -f $(OBJ)
