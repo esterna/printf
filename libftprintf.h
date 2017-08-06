@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/25 22:10:41 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/04 21:13:14 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,15 @@ int				ft_isdigit(int n);
 
 char			*ft_strchr(const char *str, int c);
 
+int				ft_strcmp(const char *s1, const char *s2);
+
 char			*ft_strcpy(char *dest, const char *src);
 
 char			*ft_strdup(const char *src);
 
 size_t			ft_strlen(const char *str);
+
+size_t			ft_wstrlen(const wchar_t *str);
 
 char			*ft_strnew(size_t size);
 
@@ -116,15 +120,27 @@ t_format		printi(char *str, char ch, t_format format);
 
 t_format		prints(char *str, char ch, t_format format);
 
+t_format		printws(wchar_t *str, wchar_t ch, t_format format);
+
 int				ft_nbrsize_base(int n, int base);
 
 void			ft_putchar(char c);
+
+void			ft_putchar_fd(char c, int fd);
+
+void			ft_putwchar(wchar_t ch);
+
+void			ft_putwchar_fd(wchar_t ch, int fd);
 
 void			ft_putnbr(int nb);
 
 void			ft_putnstr(char *str, int n);
 
 void			ft_putstr(char const *str);
+
+void			ft_putwstr(wchar_t const *str);
+
+void			ft_putwstr_fd(wchar_t const *str, int fd);
 
 /*
 ** Length Sorting Functions

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:32:23 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/25 22:50:00 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/05 17:43:18 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,18 @@
 
 t_format		sort_s(t_format format, va_list arg)
 {
-	char *str;
+	wchar_t		*wstr;
+	char		*str;
 
 	if ((format.length == 1 && format.specifier == 'c')
 			|| format.specifier == 'C')
-		format = prints(NULL, va_arg(arg, wint_t), format);
+		format = printws(NULL, va_arg(arg, wchar_t), format);
 	else if ((format.length == 1 && format.specifier == 's')
 			|| format.specifier == 'S')
-		format = prints((char *)va_arg(arg, wchar_t *), 'S', format);
+	{
+		wstr = va_arg(arg, wchar_t *);
+		format = printws((!wstr) ? (wchar_t *)"(null)" : wstr, 'S', format);
+	}
 	else if (format.specifier == '%')
 		format = prints(NULL, format.specifier, format);
 	else if (format.specifier == 'c')

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 14:22:13 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/25 22:41:18 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/04 14:41:39 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ double			ft_round_dbl(double dbl, int precision)
 	double		result;
 
 	tmp = (dbl >= 0) ? dbl : dbl * -1;
-	fac = pow(10, precision + 1);
+	fac = ft_pow(10, precision + 1);
 	precision = (precision <= 0) ? 0 : precision;
 	p = precision + 1;
 	n = (precision == 0) ? ((long)dbl) % 10 : 0;

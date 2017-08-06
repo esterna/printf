@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/07/25 22:11:04 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/05 17:36:09 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,17 +26,24 @@ FUNCTIONS =	char_repeat.c\
 			ft_pow.c\
 			ft_printf.c\
 			ft_putchar.c\
+			ft_putchar_fd.c\
+			ft_putwchar.c\
+			ft_putwchar_fd.c\
 			ft_putnbr.c\
 			ft_putnstr.c\
 			ft_putstr.c\
+			ft_putwstr.c\
+			ft_putwstr_fd.c\
 			ft_round_dbl.c\
 			ft_round.c\
 			ft_str_tolower.c\
 			ft_str_toupper.c\
 			ft_strchr.c\
+			ft_strcmp.c\
 			ft_strcpy.c\
 			ft_strdup.c\
 			ft_strlen.c\
+			ft_wstrlen.c\
 			ft_strnew.c\
 			ft_tolower.c\
 			ft_toupper.c\
@@ -49,19 +56,19 @@ OBJ = $(FUNCTIONS:.c=.o)
 all: $(NAME)
 
 $(NAME):
-	gcc $(CFLAGS) -c $(FUNCTIONS) $(DEPS)
-	ar rc $@.a $(OBJ)
-	ranlib $@.a
+	@gcc $(CFLAGS) -c $(FUNCTIONS) $(DEPS)
+	@ar rc $@.a $(OBJ)
+	@ranlib $@.a
 
 exe:
-	gcc $(CFLAGS) -g -o printf main_test.c $(FUNCTIONS)
+	@gcc $(CFLAGS) -g -o printf main_test.c $(FUNCTIONS)
 
 clean:
-	/bin/rm -f $(OBJ)
+	@/bin/rm -f $(OBJ)
 
 fclean: clean
-	/bin/rm -f printf
-	/bin/rm -f $(NAME).a
-	/bin/rm -f $(NAME).h.gch
+	@/bin/rm -f printf
+	@/bin/rm -f $(NAME).a
+	@/bin/rm -f $(NAME).h.gch
 
 re: fclean all
