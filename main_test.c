@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/06 20:36:46 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/06 20:56:39 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,7 @@ int main(void)
 	ft_printf("%-15.4A hi\n\n", 1200.0);
 */
 	
-	int i;
-
-	i = 42;
-	ft_printf("LALALALALAL\n%n\n", &i);
-
-	ft_printf("%d\n", i);
+	ft_printf("%S\n", L"( •ॢᴗ•ॢ⋈)");
 	
 
 
