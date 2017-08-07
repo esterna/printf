@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 19:27:58 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/25 18:09:06 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/06 21:37:32 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,18 +94,21 @@ static char			*part2(char *str, double dbl, int base, int precision)
 	bstr = "0123456789abcdef";
 	dtmp = dbl - (long long)dbl;
 	p = precision;
-	while (p--)
+	while (p > 0)
+	{
+		p--;
 		dtmp *= 10;
+	}
 	n = (long long)dtmp;
 	p = precision;
-	while (p)
+	while (p > 0)
 	{
 		*str = bstr[n % base];
 		str--;
 		p--;
 		n = n / base;
 	}
-	if (precision)
+	if (precision > 0)
 	{
 		*str = '.';
 		str--;
