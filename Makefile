@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/05 18:14:44 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/06 20:40:33 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,7 +61,7 @@ $(NAME):
 	@ranlib $@.a
 
 exe:
-	@gcc $(CFLAGS) -o printf main_test.c $(FUNCTIONS)
+	@gcc $(CFLAGS) -g -o printf main_test.c $(FUNCTIONS)
 
 clean:
 	@/bin/rm -f $(OBJ)
