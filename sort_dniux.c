@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:34:22 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/06 21:21:13 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/06 21:22:26 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,7 @@ char			*sort_d(t_format format, va_list arg)
 	long double	dbl;
 	int			base;
 
+	tmp = NULL;
 	dbl = (format.length == 0) ? va_arg(arg, double) : va_arg(arg, long double);
 	base = (format.specifier == 'A' || format.specifier == 'a') ? 16 : 10;
 	if (format.specifier != 'a' && format.specifier != 'A')
