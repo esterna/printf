@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 19:27:58 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/06 21:37:32 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 20:30:43 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +70,17 @@ static void			part1(char *str, double dbl, int base)
 
 	bstr = "0123456789abcdef";
 	n = (long long)dbl;
-	while (n)
+	if (n > 0)
 	{
-		*str = bstr[n % base];
-		str--;
-		n = n / base;
+		while (n)
+		{
+			*str = bstr[n % base];
+			str--;
+			n = n / base;
+		}
 	}
+	else
+		*str = '0';
 }
 
 /*

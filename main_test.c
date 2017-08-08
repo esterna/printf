@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/07 20:16:25 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 20:21:40 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,7 @@ int main(void)
 */
 	
 	ft_printf("%S\n", L"(◕‿‿◕｡)");
-	ft_printf("%LE\n", (long double)1001.0);
-	printf("%LE\n", (long double)1001.0);
+	ft_printf("%.6F\n", 0.0);
 
 
 	return 0;
