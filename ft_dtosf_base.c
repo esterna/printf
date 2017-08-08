@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/07 18:10:57 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 18:12:21 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ static char			*str_setup(double dbl, int base, int precision)
 	}
 	len--;
 	sf[len--] = (((exp < 0) ? exp * -1 : exp) % 10) + '0';
-	sf[len--] = ((exp < 0) ? exp * -1 : exp) + '0';
+	sf[len--] = (((exp /= 10) < 0) ? exp * -1 : exp) + '0';
 	sf[len--] = (find_exponent(dbl, base) >= 0) ? '+' : '-';
 	sf[len--] = (base == 10) ? 'e' : 'p';
 	return (sf);
