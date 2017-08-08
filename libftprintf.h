@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/06 20:43:53 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 20:18:09 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 # define SPECS "%sSpdDioOuUxXcCeEfFgGaAbrkn"
 # define FLAGS "-+ #0"
-# define LENGTH "hljz"
+# define LENGTH "hljzL"
 # define PRINT_S_VALS "SsCc%"
 # define PRINT_I_VALS "Ddi"
 # define PRINT_D_VALS "aAeEfFgG"
