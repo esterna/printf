@@ -6,32 +6,11 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/20 19:27:58 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/07 20:30:43 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 20:53:28 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
-
-/*
-** This function finds the size of the part of the number
-** before the decimal point.
-*/
-
-static int			dbl_size(double dbl, int base)
-{
-	int n;
-
-	n = 1;
-	if (dbl < 0)
-		dbl *= -1;
-	dbl = (long long)dbl;
-	while (dbl > 9)
-	{
-		dbl /= base;
-		n++;
-	}
-	return (n);
-}
 
 /*
 ** This function takes the given double, base,
@@ -45,7 +24,7 @@ static char			*str_setup(double dbl, int base, int precision)
 	char			*sf;
 	long long		len;
 
-	len = dbl_size(dbl, base) + ((precision > 0) ? precision + 1 : 0)
+	len = dbl_front_size(dbl, base) + ((precision > 0) ? precision + 1 : 0)
 			+ ((dbl < 0) ? 1 : 0) + ((base == 16) ? 2 : 0);
 	sf = ft_strnew(sizeof(char) * len);
 	if (dbl < 0)
@@ -129,7 +108,7 @@ char				*ft_dtoa_base(double dbl, int base, int precision)
 	if (base < 2)
 		return (NULL);
 	sf = str_setup(dbl, base, precision);
-	tmp = sf + dbl_size(dbl, base) + ((precision > 0) ? precision + 1 : 0)
+	tmp = sf + dbl_front_size(dbl, base) + ((precision > 0) ? precision + 1 : 0)
 			+ ((dbl < 0) ? 1 : 0) + ((base == 16) ? 2 : 0) - 1;
 	if (dbl < 0)
 		dbl *= -1;

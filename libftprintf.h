@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/07 20:18:09 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 20:57:05 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,10 @@ int				ft_toupper(int c);
 */
 
 int				find_exponent(double dbl, int base);
+
+int				dbl_front_size(double dbl, int base);
+
+int				dbl_frac_size(double dbl, int base);
 
 char			*ft_dtoa_base(double dbl, int base, int precision);
 
