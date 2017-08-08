@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:34:22 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/06 21:32:44 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 17:54:06 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,8 @@ char			*sort_d(t_format format, va_list arg)
 		else
 			format.specifier--;
 	}
+	else if (format.specifier == 'E' || format.specifier == 'e')
+		tmp = ft_dtosf_base(dbl, 10, format.precision);
 	else
 		tmp = ft_dtoa_base(dbl, base, format.precision);
 	if (65 <= format.specifier && format.specifier <= 90)

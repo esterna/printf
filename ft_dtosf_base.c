@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/07/25 16:53:25 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/07 18:10:57 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static char			*str_setup(double dbl, int base, int precision)
 	int		len;
 
 	exp = find_exponent(dbl, base);
-	len = 4 + ((precision > 0) ? precision + 1 : 0) + ((dbl < 0) ? 1 : 0)
-		+ ((base == 16) ? 2 : 0) + ((exp > 9) ? 1 : 0);
+	len = 5 + ((precision > 0) ? precision + 1 : 0) + ((dbl < 0) ? 1 : 0)
+		+ ((base == 16) ? 2 : 0);
 	sf = ft_strnew(sizeof(char) * len);
 	*sf = (dbl < 0.0) ? '-' : '\0';
 	if (base == 10 && precision != 0)
@@ -90,8 +90,7 @@ static char			*str_setup(double dbl, int base, int precision)
 	}
 	len--;
 	sf[len--] = (((exp < 0) ? exp * -1 : exp) % 10) + '0';
-	if ((exp /= 10) != 0)
-		sf[len--] = ((exp < 0) ? exp * -1 : exp) + '0';
+	sf[len--] = ((exp < 0) ? exp * -1 : exp) + '0';
 	sf[len--] = (find_exponent(dbl, base) >= 0) ? '+' : '-';
 	sf[len--] = (base == 10) ? 'e' : 'p';
 	return (sf);
