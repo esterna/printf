@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/15 16:03:21 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/15 18:04:18 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char			*str_setup(double dbl, int base, int precision)
 
 	exp = find_exponent(dbl, base);
 	len = 5 + ((precision > 0) ? precision + 1 : 0) + ((dbl < 0) ? 1 : 0)
-		+ ((base == 16) ? 2 : 0);
+		+ ((base == 16) ? 1 : 0);
 	sf = ft_strnew(sizeof(char) * len);
 	*sf = (dbl < 0.0) ? '-' : '\0';
 	if (base == 10 && precision != 0)
@@ -125,13 +125,12 @@ char				*ft_dtosf_base(double dbl, int base, int precision)
 	if (dbl < 0)
 		dbl = dbl * -1.0;
 	dbl = find_starting_point(dbl, base);
-	*tmp = bstr[(int)((float)dbl)];
+	*tmp = bstr[(long)((precision == 0) ? ft_round_dbl(dbl, 0.0) : dbl)];
 	tmp = tmp + ((precision != 0) ? 2 : 1);
 	while (*tmp != 'e' && *tmp != 'p')
 	{
-		dbl = ft_round_dbl(ft_fmod(dbl, 1.0), precision--) * base;
-		*tmp = bstr[(long)(*(tmp + 1) == 'e' || *(tmp + 1) == 'p'
-				? ft_round_dbl(dbl, 0.0) : dbl)];
+		dbl = ft_fmod(dbl, 1.0) * base;
+		*tmp = bstr[(long)(*(tmp + 1) == 'e' ? ft_round_dbl(dbl, 0.0) : dbl)];
 		tmp++;
 	}
 	return (sf);
