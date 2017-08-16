@@ -6,13 +6,13 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/15 20:08:00 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/16 16:44:41 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
 
-t_format	(*pr[127]) (char *str, char ch, t_format format) =
+t_format	(*g_pr[127]) (char *str, char ch, t_format format) =
 {
 	['i'] = printi,
 	['d'] = printi,
@@ -34,7 +34,7 @@ t_format	(*pr[127]) (char *str, char ch, t_format format) =
 	['G'] = printd
 };
 
-char*		(*sort[127]) (t_format format, va_list arg) =
+char		*(*g_sort[127]) (t_format format, va_list arg) =
 {
 	['i'] = sort_i,
 	['d'] = sort_i,
@@ -55,7 +55,7 @@ char*		(*sort[127]) (t_format format, va_list arg) =
 	['G'] = sort_d
 };
 
-t_format	(*sort_pns[127]) (t_format format, va_list arg) =
+t_format	(*g_sort_pns[127]) (t_format format, va_list arg) =
 {
 	['p'] = sort_p,
 	['C'] = sort_s,
@@ -68,10 +68,15 @@ t_format	(*sort_pns[127]) (t_format format, va_list arg) =
 
 t_format		parse_data(t_format format, va_list arg)
 {
-	if (sort[(int)format.specifier] != NULL)
-		format = (*pr[(int)format.specifier]) ((*sort[(int)format.specifier]) (format, arg), format.specifier, format);
-	else if (sort_pns[(int)format.specifier] != NULL)
-		format = (*sort_pns[(int)format.specifier]) (format, arg);
+	char	*tmp;
+
+	if (g_sort[(int)format.specifier] != NULL)
+	{
+		tmp = (*g_sort[(int)format.specifier])(format, arg);
+		format = (*g_pr[(int)format.specifier])(tmp, format.specifier, format);
+	}
+	else if (g_sort_pns[(int)format.specifier] != NULL)
+		format = (*g_sort_pns[(int)format.specifier])(format, arg);
 	else
 	{
 		ft_putchar('%');
