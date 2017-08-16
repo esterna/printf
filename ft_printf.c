@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/15 20:01:35 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/15 20:06:48 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ t_format	(*sort_pns[127]) (t_format format, va_list arg) =
 	['c'] = sort_s,
 	['s'] = sort_s,
 	['S'] = sort_s,
+	['%'] = sort_s,
 	['n'] = sort_n
 };
 
