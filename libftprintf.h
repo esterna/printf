@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/07 20:57:05 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/15 19:24:30 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,7 +154,7 @@ char			*sort_i(t_format format, va_list arg);
 
 char			*sort_d(t_format format, va_list arg);
 
-void			sort_n(t_format format, va_list arg);
+t_format		sort_n(t_format format, va_list arg);
 
 t_format		sort_p(t_format format, va_list arg);
 

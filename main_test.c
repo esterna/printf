@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/15 17:59:08 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/15 20:01:56 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int main(void)
 {
-/*
+
 	char *ptr = "Hello world!";
 	char *np = 0;
 	int i = 5;
@@ -77,8 +77,8 @@ int main(void)
 
 	ft_printf("%-15.4a hi\n", 1200.0);
 	ft_printf("%-15.4A hi\n\n", 1200.0);
-*/
-	
+
+
 	ft_printf("%S\n", L"(◕‿‿◕｡)");
 	ft_printf("%.2a\n", 1001.0);
 	printf("%.2a\n", 1001.0);

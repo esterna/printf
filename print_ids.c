@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 22:00:55 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/04 21:00:53 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/15 18:39:45 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,9 @@ t_format				printi(char *str, char ch, t_format format)
 	int		prec;
 	int		width;
 	char	wch;
+	char	*tmp;
 
+	tmp = str;
 	prec = format.precision - ft_strlen(str) + ((*str == '-') ? 1 : 0);
 	width = find_width(str, ch, format);
 	wch = (format.pad <= 1 || format.precision >= 0) ? ' ' : '0';
@@ -104,6 +106,7 @@ t_format				printi(char *str, char ch, t_format format)
 		format.n++;
 	}
 	char_repeat(wch, width);
+	free(tmp);
 	return (format);
 }
 
@@ -209,8 +212,10 @@ t_format				printws(wchar_t *str, wchar_t ch, t_format format)
 t_format				printd(char *str, char ch, t_format format)
 {
 	int		width;
+	char	*tmp;
 	char	wch;
 
+	tmp = str;
 	width = format.width - ft_strlen(str);
 	wch = (format.pad <= 1) ? ' ' : '0';
 	format.n += ((width > 0) ? width : 0) + ft_strlen(str)
@@ -258,5 +263,6 @@ t_format				printd(char *str, char ch, t_format format)
 		ft_putstr(str);
 	if (width > 0)
 		char_repeat(wch, width);
+	free(tmp);
 	return (format);
 }
