@@ -6,15 +6,14 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/15 18:20:50 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/15 20:03:58 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = libftprintf
 CFLAGS = -Wall -Wextra -Werror
 DEPS = libftprintf.h
-FUNCTIONS =	alloc-wrap.c\
-			char_repeat.c\
+FUNCTIONS =	char_repeat.c\
 			dbl_size.c\
 			find_exponent.c\
 			format_setup.c\
