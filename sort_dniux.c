@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 15:34:22 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/16 16:37:10 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/16 17:28:16 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,9 @@ char			*sort_i(t_format format, va_list arg)
 		return (ft_ulltoa_base(((j >= 0) ? j : j * -1),
 					((j >= 0) ? 'p' : 'n'), 10));
 	}
-	else if (format.length == 4)
-	{
-		i = va_arg(arg, long long);
-		return (ft_ulltoa_base(((i >= 0) ? i : i * -1),
-					((i >= 0) ? 'p' : 'n'), 10));
-	}
-	return (NULL);
+	i = va_arg(arg, long long);
+	return (ft_ulltoa_base(((i >= 0) ? i : i * -1),
+				((i >= 0) ? 'p' : 'n'), 10));
 }
 
 char			*sort_x(t_format format, va_list arg)
@@ -94,6 +90,26 @@ char			*sort_u(t_format format, va_list arg)
 	return (NULL);
 }
 
+static char		*sort_g(t_format format, long double dbl, int base)
+{
+	int		exp;
+	char	*tmp;
+
+	exp = find_exponent(dbl, 10);
+	if (find_exponent(dbl, 10) < -4 ||
+			find_exponent(dbl, 10) >= format.precision)
+	{
+		format.specifier = format.specifier - 2;
+		tmp = ft_dtosf_base(dbl, 10, format.precision);
+	}
+	else
+	{
+		tmp = ft_dtoa_base(dbl, base, dbl_frac_size(dbl, 10));
+		format.specifier--;
+	}
+	return (tmp);
+}
+
 char			*sort_d(t_format format, va_list arg)
 {
 	char		*tmp;
@@ -107,19 +123,7 @@ char			*sort_d(t_format format, va_list arg)
 		format.precision = format.precision >= 0 ? format.precision : 6;
 	dbl = ft_round_dbl(dbl, format.precision);
 	if (format.specifier == 'G' || format.specifier == 'g')
-	{
-		if (find_exponent(dbl, 10) < -4 ||
-				find_exponent(dbl, 10) >= format.precision)
-		{
-			format.specifier = format.specifier - 2;
-			tmp = ft_dtosf_base(dbl, 10, format.precision);
-		}
-		else
-		{
-			tmp = ft_dtoa_base(dbl, base, dbl_frac_size(dbl, 10));
-			format.specifier--;
-		}
-	}
+		tmp = sort_g(format, dbl, base);
 	else if (format.specifier != 'F' && format.specifier != 'f')
 		tmp = ft_dtosf_base(dbl, base, format.precision);
 	else
