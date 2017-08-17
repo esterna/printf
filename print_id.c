@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 16:26:01 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/16 16:30:43 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/16 21:00:24 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,25 +56,35 @@ static t_format			put_prefix(char *str, char ch, t_format format)
 	return (format);
 }
 
-/*
-** Prints all number specifiers with precision and width applied.
-*/
-
-t_format				printi(char *str, char ch, t_format format)
+static t_format			format_n(char *str, char ch, t_format format, int i)
 {
-	int		prec;
-	int		width;
-	char	wch;
-	char	*tmp;
+	int prec;
+	int width;
 
-	tmp = str;
-	prec = format.precision - ft_strlen(str) + ((*str == '-') ? 1 : 0);
-	width = find_width(str, ch, format);
-	wch = (format.pad <= 1 || format.precision >= 0) ? ' ' : '0';
-	format.n += ((prec > 0) ? prec : 0) +
+	if (i == 1)
+	{
+		prec = format.precision - ft_strlen(str) + ((*str == '-') ? 1 : 0);
+		width = find_width(str, ch, format);
+		format.n += ((prec > 0) ? prec : 0) +
 				((width > 0) ? width : 0) + ft_strlen(str) -
 				((format.precision == 0 && *str == '0') ? 1 : 0) +
 				((format.sign && *str != '-' && ch != 'u') ? 1 : 0);
+	}
+	else
+	{
+		width = format.width - ft_strlen(str);
+		format.n += ((width > 0) ? width : 0) + ft_strlen(str)
+				+ ((format.prefix && !format.precision) ? 1 : 0);
+	}
+	return (format);
+}
+
+static int				put_front(char *str, char ch,
+									t_format format, int width)
+{
+	char wch;
+
+	wch = (format.pad <= 1 || format.precision >= 0) ? ' ' : '0';
 	if (format.pad == 0 || (format.pad == 2 && wch == ' '))
 	{
 		char_repeat(wch, width);
@@ -82,22 +92,36 @@ t_format				printi(char *str, char ch, t_format format)
 	}
 	if (format.sign != 0 && *str != '-' && ch != 'u')
 		ft_putchar((format.sign == 1) ? ' ' : '+');
-	else if (*str == '-' && wch == '0')
-	{
-		ft_putchar(*str);
-		str++;
-	}
+	else if (*str == '-' && wch == '0' && str++)
+		ft_putchar('-');
 	format = put_prefix(str, ch, format);
 	if ((format.pad == 2 || format.pad == 3) && width > 0)
 	{
 		char_repeat(wch, width);
 		width = 0;
 	}
+	return (width);
+}
+
+/*
+** Prints all number specifiers with precision and width applied.
+*/
+
+t_format				printi(char *str, char ch, t_format format)
+{
+	int		width;
+	char	*tmp;
+
+	tmp = str;
+	width = find_width(str, ch, format);
+	format = format_n(str, ch, format, 1);
+	width = put_front(str, ch, format, width);
 	if (!(format.precision == 0 && *str == '0'))
 	{
 		if (*str == '-' && str++)
 			ft_putchar('-');
-		char_repeat('0', prec);
+		char_repeat('0', format.precision - ft_strlen(str)
+								+ ((*str == '-') ? 1 : 0));
 		ft_putstr(str);
 	}
 	if ((format.specifier == 'o' || format.specifier == 'O')
@@ -106,9 +130,37 @@ t_format				printi(char *str, char ch, t_format format)
 		ft_putstr(str);
 		format.n++;
 	}
-	char_repeat(wch, width);
+	char_repeat((format.pad <= 1 || format.precision >= 0) ? ' ' : '0', width);
 	free(tmp);
 	return (format);
+}
+
+static int				put_dfront(char *str, char ch,
+									t_format format, int width)
+{
+	if (!format.pad && width > 0 && ((format.pad <= 1) ? ' ' : '0') == ' ')
+	{
+		char_repeat(((format.pad <= 1) ? ' ' : '0'), width);
+		width = 0;
+	}
+	if (format.sign && *str != '-')
+		ft_putchar((format.sign == 1) ? ' ' : '+');
+	else if (((format.pad <= 1) ? ' ' : '0') == '0')
+	{
+		if (ch == 'a' || ch == 'A')
+		{
+			ft_putnstr(str, (*str == '-') ? 3 : 2);
+			str = str + ((*str == '-') ? 3 : 2);
+		}
+		else if (*str == '-' && str++)
+			ft_putchar('-');
+	}
+	if (width > 0 && ((format.pad <= 1) ? ' ' : '0') == '0')
+	{
+		char_repeat(((format.pad <= 1) ? ' ' : '0'), width);
+		width = 0;
+	}
+	return (width);
 }
 
 /*
@@ -119,38 +171,10 @@ t_format				printd(char *str, char ch, t_format format)
 {
 	int		width;
 	char	*tmp;
-	char	wch;
 
 	tmp = str;
-	width = format.width - ft_strlen(str);
-	wch = (format.pad <= 1) ? ' ' : '0';
-	format.n += ((width > 0) ? width : 0) + ft_strlen(str)
-				+ ((format.prefix && !format.precision) ? 1 : 0);
-	if (!format.pad && width > 0 && wch == ' ')
-	{
-		char_repeat(wch, width);
-		width = 0;
-	}
-	if (format.sign && *str != '-')
-		ft_putchar((format.sign == 1) ? ' ' : '+');
-	else if (wch == '0')
-	{
-		if (ch == 'a' || ch == 'A')
-		{
-			ft_putnstr(str, (*str == '-') ? 3 : 2);
-			str = str + ((*str == '-') ? 3 : 2);
-		}
-		else if (*str == '-')
-		{
-			ft_putchar(*str);
-			str++;
-		}
-	}
-	if (width > 0 && wch == '0')
-	{
-		char_repeat(wch, width);
-		width = 0;
-	}
+	format = format_n(str, ch, format, 2);
+	width = put_dfront(str, ch, format, format.width - ft_strlen(str));
 	if (ch == 'e' || ch == 'E')
 	{
 		ft_putchar(*str);
@@ -167,8 +191,7 @@ t_format				printd(char *str, char ch, t_format format)
 		ft_putchar('.');
 	if (ch != 'f' && ch != 'F')
 		ft_putstr(str);
-	if (width > 0)
-		char_repeat(wch, width);
+	char_repeat((format.pad <= 1) ? ' ' : '0', width);
 	free(tmp);
 	return (format);
 }
