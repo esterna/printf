@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/16 17:55:43 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/16 21:04:49 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,8 @@ FUNCTIONS =	char_repeat.c\
 			ft_tolower.c\
 			ft_toupper.c\
 			ft_ulltoa_base.c\
-			print_id.c\
+			print_i.c\
+			print_d.c\
 			print_ws.c\
 			sort_diux.c\
 			sort_psn.c
@@ -63,7 +64,7 @@ $(NAME):
 	@ranlib $@.a
 
 exe:
-	@gcc $(CFLAGS) -g -o printf main_test.c $(FUNCTIONS)
+	@gcc $(CFLAGS) -o printf main_test.c $(FUNCTIONS)
 
 clean:
 	@/bin/rm -f $(OBJ)
