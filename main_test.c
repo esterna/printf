@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 21:35:56 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 21:43:57 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,9 @@ int main(void)
 
 	ft_printf("%a\n", 0.0);
 	ft_printf("%a\n", -0x1.f4p+12);*/
-	ft_printf("%.6Le\n", 9.223372e+18);
+
+	long double dbl = 9223372036854775807.0;
+	ft_printf("%.6Le\n", dbl);
 
 
 	return 0;
