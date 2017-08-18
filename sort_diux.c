@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 17:30:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 17:48:19 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 18:01:01 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,13 +119,15 @@ char			*sort_d(t_format format, va_list arg)
 	tmp = NULL;
 	dbl = (format.length == 0) ? va_arg(arg, double) : va_arg(arg, long double);
 	base = (format.specifier == 'A' || format.specifier == 'a') ? 16 : 10;
+	if (format.specifier == 'g' || format.specifier == 'G')
+		format.precision = format.precision == 0 ? 1 : format.precision;
 	if (format.specifier != 'a' && format.specifier != 'A')
 		format.precision = format.precision >= 0 ? format.precision : 6;
 	dbl = ft_round_dbl(dbl, format.precision);
 	if (format.specifier == 'G' || format.specifier == 'g')
 		tmp = sort_g(format, dbl, base);
-/*	else if (format.specifier != 'F' && format.specifier != 'f')
-		tmp = ft_dtosf_base(dbl, base, format.precision);*/
+	else if (format.specifier != 'F' && format.specifier != 'f')
+		tmp = ft_dtosf_base(dbl, base, format.precision);
 	else
 		tmp = ft_dtoa_base(dbl, base, format.precision);
 	if (65 <= format.specifier && format.specifier <= 90)
