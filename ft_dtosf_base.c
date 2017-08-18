@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 19:55:23 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 19:56:03 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static char			*str_setup(double dbl, int base, int precision)
 
 	exp = find_exponent(dbl, base);
 	len = 5 + ((precision > 0) ? precision : 0) + ((dbl < 0) ? 1 : 0)
-		+ ((base == 16) ? 2 : 0) ((base == 10) ? 1 : 0);
+		+ ((base == 16) ? 2 : 0) + ((base == 10) ? 1 : 0);
 	sf = ft_strnew(sizeof(char) * len);
 	*sf = (dbl < 0.0) ? '-' : '\0';
 	if (base == 10 && precision != 0)
