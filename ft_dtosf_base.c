@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/15 18:04:18 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 18:19:58 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ char				*ft_dtosf_base(double dbl, int base, int precision)
 	tmp = sf + ((dbl < 0) ? 1 : 0) + ((base == 16) ? 2 : 0);
 	if (dbl < 0)
 		dbl = dbl * -1.0;
-	dbl = find_starting_point(dbl, base);
+	dbl = ft_round_dbl(find_starting_point(dbl, base), precision);
 	*tmp = bstr[(long)((precision == 0) ? ft_round_dbl(dbl, 0.0) : dbl)];
 	tmp = tmp + ((precision != 0) ? 2 : 1);
 	while (*tmp != 'e' && *tmp != 'p')
