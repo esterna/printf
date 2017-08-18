@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 17:39:56 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 22:12:28 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ t_format	(*g_pr[127]) (char *str, char ch, t_format format) =
 	['u'] = printi,
 	['U'] = printi,
 	['p'] = printi,
+	['b'] = printi,
 	['a'] = printd,
 	['A'] = printd,
 	['e'] = printd,
@@ -52,7 +53,8 @@ char		*(*g_sort[127]) (t_format format, va_list arg) =
 	['f'] = sort_d,
 	['F'] = sort_d,
 	['g'] = sort_d,
-	['G'] = sort_d
+	['G'] = sort_d,
+	['b'] = sort_b
 };
 
 t_format	(*g_sort_pns[127]) (t_format format, va_list arg) =

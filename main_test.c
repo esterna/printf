@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 21:43:57 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 22:16:01 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,13 @@ int main(void)
 	ft_printf("%aKashim a %a histoires à raconterIl fait au moins %a\n%a%12a%a%a%a\n%%a %7a == |%a|\n%%a 	 == |%a|\n%%a Lydie == |%a|\n%%a 42.42 == |%a|\n%AKashim a %A histoires à raconterIl fait au moins %A\n%A%12A%A%A%A%%A %A == |%A|\n%%A 	 == |%A|\n%%A Lydie == |%A|\n%%A 42.42 == |%A|\n%%A 42.42 == |%A|\n", 42.0, 1001.0, -8000.0, 0.0, 2147480000.0, -2147480000.0, -2.14748e+09, 2.14748e+09, 42.0, 34.0, 9.0, 503.0, 42.42, 42.0, 1001.0, -8000.0, 0.0, 2147480000.0, -2147480000.0, -2.14748e+09, 2.14748e+09, 42.0, 34.0, 9.0, 503.0, 42.42);
 
 	ft_printf("%a\n", 0.0);
-	ft_printf("%a\n", -0x1.f4p+12);*/
+	ft_printf("%a\n", -0x1.f4p+12);
 
 	long double dbl = 9223372036854775807.0;
-	ft_printf("%.6Le\n", dbl);
+	ft_printf("%.6Le\n", dbl);*/
+
+	ft_printf("%b\n", 42);
+	ft_printf("%b\n", -42);
 
 
 	return 0;

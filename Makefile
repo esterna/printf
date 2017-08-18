@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/17 18:14:47 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/17 22:32:59 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,8 @@ FUNCTIONS =	char_repeat.c\
 			print_d.c\
 			print_ws.c\
 			sort_diux.c\
-			sort_psn.c
+			sort_psn.c\
+			sort_b.c
 OBJ = $(FUNCTIONS:.c=.o)
 
 all: $(NAME)
