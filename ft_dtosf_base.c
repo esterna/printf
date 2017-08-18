@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 19:58:50 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 20:09:19 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,18 +43,18 @@ static double		find_starting_point(double dbl, int base)
 int					find_precision(double dbl, int base)
 {
 	double	start;
-	int		tmp;
+	long	tmp;
 	int		n;
 
 	n = 0;
 	start = find_starting_point(dbl, base);
-	tmp = (int)start;
+	tmp = (long)start;
 	start = start - tmp;
 	while (0 < start && start < 1)
 	{
-		start *= 10.0;
+		start *= base;
 		n++;
-		tmp = (int)start + 1;
+		tmp = (long)start ;
 		start = start - (double)tmp;
 	}
 	return (n);
