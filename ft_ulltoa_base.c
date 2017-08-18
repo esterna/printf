@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 19:08:21 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:51:12 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/18 13:59:43 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static int			nbr_size(unsigned long long n, char sign, int base)
 	int len;
 
 	len = (sign == 'n' && base == 10) ? 1 : 0;
-	if (sign == 'n' && base == 2)
-		return (8);
 	if (n == 0)
 		len++;
 	while (n)
@@ -60,6 +58,13 @@ static char			*invert_binary(char *nbr)
 	return (nbr);
 }
 
+/*
+** Converts an unsigned long long into a char string using a given base,
+** the sign tells whether the original number was negative or positive.
+** For binary, negative numbers are represented in "Two's Complement",
+** this is done by flipping the bits of the given number and adding 1.
+*/
+
 char				*ft_ulltoa_base(unsigned long long n, char sign, int base)
 {
 	int		len;
@@ -69,6 +74,8 @@ char				*ft_ulltoa_base(unsigned long long n, char sign, int base)
 	bstr = "0123456789abcdef";
 	if (base < 2)
 		return (NULL);
+	if (n == 2 && sign == 'n')
+		n = n + 1;
 	len = nbr_size(n, sign, base) - 1;
 	nbr = str_setup(n, sign, base);
 	if (!nbr)
