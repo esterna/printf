@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:12:28 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 22:55:34 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,18 @@ t_format		print_curr(char **current, t_format format)
 		(*current)++;
 		format.n++;
 	}
+	return (format);
+}
+
+t_format		initialise_format(t_format format)
+{
+	format.pad = 0;
+	format.sign = 0;
+	format.width = 0;
+	format.prefix = 0;
+	format.precision = -1;
+	format.length = 0;
+	format.ptr = NULL;
 	return (format);
 }
 

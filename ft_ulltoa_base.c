@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/06 19:08:21 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:36:10 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 22:51:12 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static char			*str_setup(unsigned long long n, char sign, int base)
 	return (nbr);
 }
 
-static char			*invert_binary(char	*nbr)
+static char			*invert_binary(char *nbr)
 {
 	char *tmp;
 

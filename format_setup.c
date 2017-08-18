@@ -6,11 +6,17 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 21:55:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:49:09 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 22:55:14 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libftprintf.h"
+
+static void			nbr_ff(char **str)
+{
+	while (isdigit(**str) == 1)
+		(*current)++;
+}
 
 /*
 ** Checks for both format and width. Updates format struct.
@@ -54,8 +60,7 @@ t_format			format_width(char **current, t_format format, va_list arg)
 	if (**current == '*')
 		format.width = va_arg(arg, int);
 	(*current) = (*current) + ((**current == '*') ? 1 : 0);
-	while (isdigit(**current) == 1)
-		(*current)++;
+	nbr_ff(current);
 	return (format);
 }
 
@@ -141,18 +146,6 @@ t_format			format_length(char **current, t_format format)
 			format.length = 4;
 		(*current) += (**current == *(*current + 1)) ? 2 : 1;
 	}
-	return (format);
-}
-
-t_format			initialise_format(t_format format)
-{
-	format.pad = 0;
-	format.sign = 0;
-	format.width = 0;
-	format.prefix = 0;
-	format.precision = -1;
-	format.length = 0;
-	format.ptr = NULL;
 	return (format);
 }
 
