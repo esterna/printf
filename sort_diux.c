@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 17:30:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/16 17:30:34 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 17:48:19 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,8 +124,8 @@ char			*sort_d(t_format format, va_list arg)
 	dbl = ft_round_dbl(dbl, format.precision);
 	if (format.specifier == 'G' || format.specifier == 'g')
 		tmp = sort_g(format, dbl, base);
-	else if (format.specifier != 'F' && format.specifier != 'f')
-		tmp = ft_dtosf_base(dbl, base, format.precision);
+/*	else if (format.specifier != 'F' && format.specifier != 'f')
+		tmp = ft_dtosf_base(dbl, base, format.precision);*/
 	else
 		tmp = ft_dtoa_base(dbl, base, format.precision);
 	if (65 <= format.specifier && format.specifier <= 90)
