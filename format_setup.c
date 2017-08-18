@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 21:55:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 17:41:41 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 22:49:09 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,12 +52,10 @@ t_format			format_width(char **current, t_format format, va_list arg)
 		(*current)++;
 	}
 	if (**current == '*')
-	{
 		format.width = va_arg(arg, int);
+	(*current) = (*current) + ((**current == '*') ? 1 : 0);
+	while (isdigit(**current) == 1)
 		(*current)++;
-		while (isdigit(**current) == 1)
-			(*current)++;
-	}
 	return (format);
 }
 
@@ -87,7 +85,8 @@ t_format			format_width(char **current, t_format format, va_list arg)
 ** an explicit value for precision, 0 is assumed.
 */
 
-t_format			format_precision(char **current, t_format format, va_list arg)
+t_format			format_precision(char **current, t_format format,
+										va_list arg)
 {
 	(*current)++;
 	format.precision = 0;

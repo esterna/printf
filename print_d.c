@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 20:56:27 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/16 21:08:14 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 22:44:30 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static t_format			format_n(char *str, t_format format)
 		+ ((format.prefix && !format.precision) ? 1 : 0);
 	return (format);
 }
-
 
 static int				put_dfront(char *str, char ch,
 									t_format format, int width)
