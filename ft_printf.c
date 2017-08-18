@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/16 16:44:41 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 17:39:56 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int				ft_printf(const char *current, ...)
 		if (!*current || (*current == '%' && *(current + 1) == '\0'))
 			break ;
 		current++;
-		format = find_format((char **)&current, format);
+		format = find_format((char **)&current, format, arg);
 		if (!*current)
 			break ;
 		format.specifier = *current;

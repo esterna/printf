@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/15 19:24:30 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 17:39:15 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,15 +100,15 @@ char			*ft_ulltoa_base(unsigned long long n, char sign, int base);
 ** Format Functions
 */
 
-t_format		find_format(char **current, t_format format);
+t_format		find_format(char **current, t_format format, va_list arg);
 
 t_format		initialise_format(t_format format);
 
 t_format		format_length(char **current, t_format format);
 
-t_format		format_precision(char **current, t_format format);
+t_format		format_precision(char **current, t_format format, va_list arg);
 
-t_format		format_width(char **current, t_format format);
+t_format		format_width(char **current, t_format format, va_list arg);
 
 /*
 ** Printing Functions

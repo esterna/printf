@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 21:55:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/16 16:18:22 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/17 17:41:41 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 **				  The value is not truncated even if the result is larger.
 */
 
-t_format			format_width(char **current, t_format format)
+t_format			format_width(char **current, t_format format, va_list arg)
 {
 	while (ft_strchr(FLAGS, **current) && **current != '\0')
 	{
@@ -50,6 +50,13 @@ t_format			format_width(char **current, t_format format)
 	{
 		format.width = (format.width * 10) + (**current - '0');
 		(*current)++;
+	}
+	if (**current == '*')
+	{
+		format.width = va_arg(arg, int);
+		(*current)++;
+		while (isdigit(**current) == 1)
+			(*current)++;
 	}
 	return (format);
 }
@@ -80,7 +87,7 @@ t_format			format_width(char **current, t_format format)
 ** an explicit value for precision, 0 is assumed.
 */
 
-t_format			format_precision(char **current, t_format format)
+t_format			format_precision(char **current, t_format format, va_list arg)
 {
 	(*current)++;
 	format.precision = 0;
@@ -88,6 +95,13 @@ t_format			format_precision(char **current, t_format format)
 	{
 		format.precision = (format.precision * 10) + (**current - '0');
 		(*current)++;
+	}
+	if (**current == '*')
+	{
+		format.precision = va_arg(arg, int);
+		(*current)++;
+		while (isdigit(**current) == 1)
+			(*current)++;
 	}
 	return (format);
 }
@@ -143,16 +157,17 @@ t_format			initialise_format(t_format format)
 	return (format);
 }
 
-t_format			find_format(char **current, t_format format)
+t_format			find_format(char **current, t_format format, va_list arg)
 {
 	while ((ft_strchr(FLAGS, **current) || ft_isdigit(**current)
-			|| **current == '.' || ft_strchr(LENGTH, **current))
-			&& **current != '\0')
+			|| **current == '.' || ft_strchr(LENGTH, **current)
+			|| **current == '*') && **current != '\0')
 	{
-		if (ft_strchr(FLAGS, **current) || ft_isdigit(**current))
-			format = format_width(current, format);
+		if (ft_strchr(FLAGS, **current) || ft_isdigit(**current)
+										|| **current == '*')
+			format = format_width(current, format, arg);
 		if (**current == '.')
-			format = format_precision(current, format);
+			format = format_precision(current, format, arg);
 		if (ft_strchr(LENGTH, **current) && **current != '\0')
 			format = format_length(current, format);
 	}
