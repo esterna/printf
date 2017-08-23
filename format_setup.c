@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 21:55:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:56:52 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/18 14:21:31 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void			nbr_ff(char **str)
 {
-	while (isdigit(**str) == 1)
+	while (ft_isdigit(**str) == 1)
 		(*str)++;
 }
 
@@ -104,7 +104,7 @@ t_format			format_precision(char **current, t_format format,
 	{
 		format.precision = va_arg(arg, int);
 		(*current)++;
-		while (isdigit(**current) == 1)
+		while (ft_isdigit(**current) == 1)
 			(*current)++;
 	}
 	return (format);

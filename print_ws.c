@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 16:22:10 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/16 18:13:14 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/18 16:57:46 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static t_format			find_width(char *str, t_format format)
 	else
 		prec = format.precision < 0 || format.precision > (int)ft_strlen(str)
 									? ft_strlen(str) : format.precision;
-	format.width -= (!str) ? 1 : prec;
-	format.n += format.width;
+	format.width = format.width - ((!str) ? 1 : prec);
+	format.n += (format.width >= 0 ? format.width : 0);
 	return (format);
 }
 
@@ -47,7 +47,8 @@ t_format				prints(char *str, char ch, t_format format)
 	{
 		ft_putnstr(str, (format.precision < 0) ?
 				ft_strlen(str) : format.precision);
-		format.n += (format.precision < 0) ? ft_strlen(str) : format.precision;
+		format.n += (format.precision < 0 || format.precision > (int)ft_strlen(str))
+											? ft_strlen(str) : format.precision;
 	}
 	if (format.width > 0)
 		char_repeat(' ', format.width);
