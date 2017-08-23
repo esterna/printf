@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/04 16:48:07 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/06 20:53:55 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 21:04:21 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void				ft_putwchar_fd(wchar_t ch, int fd)
 {
-	if (ch < (MB_CUR_MAX == 1 ? 255 : 127))
+	if (ch < (MB_CUR_MAX == 1 ? 127 : 255))
 		ft_putchar_fd(ch, fd);
 	else if (ch <= 2047)
 	{
