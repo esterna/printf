@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 21:04:10 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/22 17:38:10 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 21:41:44 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static t_format			format_n(char *str, char ch, t_format format)
 	return (format);
 }
 
-static t_format				put_front(char **str, char ch, t_format format)
+static t_format			put_front(char **str, char ch, t_format format)
 {
 	char wch;
 
@@ -117,7 +117,8 @@ t_format				printi(char *str, char ch, t_format format)
 		ft_putstr(str);
 		format.n++;
 	}
-	char_repeat((format.pad <= 1 || format.precision >= 0) ? ' ' : '0', format.width);
+	char_repeat((format.pad <= 1 || format.precision >= 0) ?
+								' ' : '0', format.width);
 	free(tmp);
 	return (format);
 }

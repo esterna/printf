@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 16:22:10 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/22 19:07:41 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 21:42:44 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_format				prints(char *str, char ch, t_format format)
 	format = find_width(str, format);
 	if ((!format.pad || format.pad == 2) && format.width > 0)
 	{
-		char_repeat((format.pad <= 1 || format.precision >= 0) ? ' ' : '0', format.width);
+		char_repeat((format.pad <= 1 || format.precision >= 0)
+									? ' ' : '0', format.width);
 		format.width = 0;
 	}
 	if (!str)
@@ -47,11 +48,12 @@ t_format				prints(char *str, char ch, t_format format)
 	{
 		ft_putnstr(str, (format.precision < 0) ?
 				ft_strlen(str) : format.precision);
-		format.n += (format.precision < 0 || format.precision > (int)ft_strlen(str))
-											? ft_strlen(str) : format.precision;
+		format.n += (format.precision < 0 || format.precision
+					> (int)ft_strlen(str)) ? ft_strlen(str) : format.precision;
 	}
 	if (format.width > 0)
-		char_repeat((format.pad <= 1 || format.precision >= 0) ? ' ' : '0', format.width);
+		char_repeat((format.pad <= 1 || format.precision >= 0)
+									? ' ' : '0', format.width);
 	return (format);
 }
 
