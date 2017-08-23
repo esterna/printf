@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/13 21:55:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/18 14:21:31 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 17:56:38 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,13 +130,13 @@ t_format			format_length(char **current, t_format format)
 	{
 		if (**current == 'h' && *(*current + 1) == 'h')
 			format.length = (format.length == 0) ? -2 : format.length;
-		if (**current == 'h')
+		else if (**current == 'h')
 			format.length = (format.length == 0 || format.length < -1)
 											? -1 : format.length;
 		if (**current == 'l' && *(*current + 1) == 'l')
 			format.length = (format.length == 0 || format.length < 2)
 											? 2 : format.length;
-		if (**current == 'l' || **current == 'L')
+		else if (**current == 'l' || **current == 'L')
 			format.length = (format.length == 0 || format.length < 1)
 											? 1 : format.length;
 		if (**current == 'j')
