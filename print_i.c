@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 21:04:10 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/22 17:37:01 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 17:38:10 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,10 +105,10 @@ t_format				printi(char *str, char ch, t_format format)
 	format = put_front(&str, ch, format);
 	if (!(format.precision == 0 && *str == '0'))
 	{
-/*		if (*str == '-' && str++)
+		if (*str == '-' && str++)
 			ft_putchar('-');
 		char_repeat('0', format.precision - ft_strlen(str)
-								+ ((*str == '-') ? 1 : 0));*/
+								+ ((*str == '-') ? 1 : 0));
 		ft_putstr(str);
 	}
 	if ((format.specifier == 'o' || format.specifier == 'O')
