@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 13:08:42 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:55:34 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/23 00:03:13 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,25 @@ t_format		parse_data(t_format format, va_list arg)
 
 t_format		print_curr(char **current, t_format format)
 {
+	char *tmp;
+
 	while (**current != '%' && **current != '\0')
 	{
+		if (**current == '{' && (tmp = find_color(ft_strsub(*current + 1, 0,
+							ft_strchr(*current, '}') - *current - 1))) != NULL)
+		{
+			print_colors(tmp);
+			*current += ft_strlen(tmp) + 2;
+			free((void *)tmp);
+		}
+		else if (**current == '{' && ft_strcmp(ft_strsub(*current, 0,
+						ft_strchr(*current, '}') - *current + 1), "{eoc}") == 0)
+		{
+			ft_putstr("\e[0m");
+			*current += 5;
+		}
+		if (**current == '\0' || **current == '%')
+			break ;
 		ft_putchar(**current);
 		(*current)++;
 		format.n++;

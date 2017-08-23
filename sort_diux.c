@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 17:30:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/22 21:52:13 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 21:56:10 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ char			*sort_d(t_format format, va_list arg)
 	tmp = NULL;
 	dbl = (format.length == 0) ? va_arg(arg, double) : va_arg(arg, long double);
 	base = (format.specifier == 'A' || format.specifier == 'a') ? 16 : 10;
-		if (format.specifier != 'a' && format.specifier != 'A')
+	if (format.specifier != 'a' && format.specifier != 'A')
 		format.precision = format.precision >= 0 ? format.precision : 6;
 	dbl = ft_round_dbl(dbl, format.precision);
 	if (format.specifier == 'G' || format.specifier == 'g')

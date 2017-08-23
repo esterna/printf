@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/05/31 11:54:30 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:13:19 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 23:52:24 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define PRINT_I_VALS "Ddi"
 # define PRINT_D_VALS "aAeEfFgG"
 # define PRINT_X_VALS "OoXx"
+# define COLORS "red green yellow blue magenta cyan"
 
 typedef	struct	s_format
 {
@@ -58,7 +59,14 @@ size_t			ft_strlen(const char *str);
 
 size_t			ft_wstrlen(const wchar_t *str);
 
+char			*ft_strstr(const char *haystack, const char *needle);
+
+char			*ft_strnstr(const char *haystack, const char *needle,
+							size_t len);
+
 char			*ft_strnew(size_t size);
+
+char			*ft_strsub(char const *s, unsigned int start, size_t len);
 
 char			*ft_str_tolower(char *str);
 
@@ -71,6 +79,8 @@ int				ft_toupper(int c);
 /*
 ** Conversion functions
 */
+
+char			*find_color(char *color);
 
 int				find_exponent(double dbl, int base);
 
@@ -115,6 +125,8 @@ t_format		format_width(char **current, t_format format, va_list arg);
 */
 
 void			char_repeat(char ch, int n);
+
+void			print_colors(char *color);
 
 int				ft_printf(const char *format, ...);
 

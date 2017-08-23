@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/18 14:34:19 by esterna          ###   ########.fr        #
+#    Updated: 2017/08/22 22:35:45 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ NAME = libftprintf
 CFLAGS = -Wall -Wextra -Werror
 DEPS = libftprintf.h
 FUNCTIONS =	char_repeat.c\
+			colors.c\
 			dbl_size.c\
 			find_exponent.c\
 			format_setup.c\
@@ -44,6 +45,9 @@ FUNCTIONS =	char_repeat.c\
 			ft_strcpy.c\
 			ft_strdup.c\
 			ft_strlen.c\
+			ft_strstr.c\
+			ft_strnstr.c\
+			ft_strsub.c\
 			ft_wstrlen.c\
 			ft_strnew.c\
 			ft_tolower.c\
@@ -74,5 +78,6 @@ fclean: clean
 	@/bin/rm -f printf
 	@/bin/rm -f $(NAME).a
 	@/bin/rm -f $(NAME).h.gch
+	@/bin/rm -rf printf.dSYM/
 
 re: fclean all
