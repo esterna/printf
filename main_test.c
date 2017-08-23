@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/22 17:58:51 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 20:31:23 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,17 @@ int main(void)
 	ft_printf("%b\n", 4261611616516);
 	ft_printf("%b\n", -4261611616516);*/
 
-	int i = ft_printf("%05%"); 
+	int i = ft_printf("%x", 42);	
 
 	ft_printf("\n");
+
+	ft_printf("before %x after\n", 42);
+
+	ft_printf("%x%x%x%x%x", 1, 100, 999, 42, 999988888);
+
+	ft_printf("a%xb%xc%xd", 0, 55555, 100000);
+
+	ft_printf("%x, %x", 0, UINT_MAX);
 
 	return i;
 }
