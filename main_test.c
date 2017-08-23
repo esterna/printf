@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/22 21:38:39 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 21:48:16 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,12 @@ int main(void)
 	ft_printf("%b\n", 4261611616516);
 	ft_printf("%b\n", -4261611616516);*/
 
-	int i = ft_printf("%hD, %hD", 0, USHRT_MAX);
+/*	int i = ft_printf("%G\n", 42.42);
+	printf("%G\n", 42.42);
+*/
+	ft_printf("%.0G\n", 42.42);
+	printf("%.0G\n", 42.42);
 
 
-	return i;
+	return 0;
 }

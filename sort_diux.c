@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 17:30:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:10:50 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/22 21:52:13 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,13 @@ char			*sort_u(t_format format, va_list arg)
 static char		*sort_g(t_format format, long double dbl, int base)
 {
 	int		exp;
+	int		prec;
 	char	*tmp;
 
 	exp = find_exponent(dbl, 10);
-	if (find_exponent(dbl, 10) < -4 ||
-			find_exponent(dbl, 10) >= format.precision)
+	if (format.specifier == 'g' || format.specifier == 'G')
+		prec = format.precision == 0 ? 1 : format.precision;
+	if (exp < -4 || exp >= prec)
 	{
 		format.specifier = format.specifier - 2;
 		tmp = ft_dtosf_base(dbl, 10, format.precision);
@@ -119,9 +121,7 @@ char			*sort_d(t_format format, va_list arg)
 	tmp = NULL;
 	dbl = (format.length == 0) ? va_arg(arg, double) : va_arg(arg, long double);
 	base = (format.specifier == 'A' || format.specifier == 'a') ? 16 : 10;
-	if (format.specifier == 'g' || format.specifier == 'G')
-		format.precision = format.precision == 0 ? 1 : format.precision;
-	if (format.specifier != 'a' && format.specifier != 'A')
+		if (format.specifier != 'a' && format.specifier != 'A')
 		format.precision = format.precision >= 0 ? format.precision : 6;
 	dbl = ft_round_dbl(dbl, format.precision);
 	if (format.specifier == 'G' || format.specifier == 'g')
