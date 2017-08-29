@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/23 00:09:33 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/28 23:19:25 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,10 +102,11 @@ int main(void)
 
 	ft_printf("%.0G\n", 42.42);
 	printf("%.0G\n", 42.42);
-*/
+
 	ft_printf("{red}Hi There!{eoc}\n");
 	ft_printf("{cyan}%d{eoc} {magenta}%O{eoc}\n", 42, 42);
-
+*/
+	ft_printf("%g\n", 0.0001);
 
 	return 0;
 }
