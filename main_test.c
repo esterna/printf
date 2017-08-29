@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/02 11:53:19 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/28 23:19:25 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/28 23:35:37 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,7 @@ int main(void)
 	ft_printf("{cyan}%d{eoc} {magenta}%O{eoc}\n", 42, 42);
 */
 	ft_printf("%g\n", 0.0001);
+	ft_printf("%g\n", 0.0);
 
 	return 0;
 }

@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/07 20:48:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/28 23:30:35 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/28 23:34:42 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ int			dbl_frac_size(double dbl, int base)
 		dbl *= base;
 		n++;
 	}
+	if ((long long) dbl == 0)
+		return (0);
 	while ((long long)dbl > 0.9)
 	{
 		dbl = (dbl - (long long)dbl) * base;
