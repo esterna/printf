@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/16 17:30:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/22 21:56:10 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/29 18:28:34 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,10 @@ static char		*sort_g(t_format format, long double dbl, int base)
 	}
 	else
 	{
-		tmp = ft_dtoa_base(dbl, base, dbl_frac_size(dbl, 10));
+		if ((prec = dbl_frac_size(dbl, 10, format.precision)) > format.precision)
+			tmp = ft_dtoa_base(dbl, base, format.precision);
+		else
+			tmp = ft_dtoa_base(dbl, base, prec);
 		format.specifier--;
 	}
 	return (tmp);

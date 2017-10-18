@@ -6,7 +6,7 @@
 #    By: esterna <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/01/26 17:01:46 by esterna           #+#    #+#              #
-#    Updated: 2017/08/22 22:35:45 by esterna          ###   ########.fr        #
+#    Updated: 2017/09/06 15:58:55 by esterna          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,8 @@ FUNCTIONS =	char_repeat.c\
 			dbl_size.c\
 			find_exponent.c\
 			format_setup.c\
+			ft_abs.c\
+			ft_abs_dbl.c\
 			ft_dtoa_base.c\
 			ft_dtosf_base.c\
 			ft_fmod.c\

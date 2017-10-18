@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/07 20:48:32 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/28 23:34:42 by esterna          ###   ########.fr       */
+/*   Updated: 2017/09/05 16:28:11 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int			dbl_front_size(double dbl, int base)
 	if (dbl < 0)
 		dbl *= -1;
 	dbl = (long long)dbl;
-	while (dbl > 9)
+	while ((long long)dbl > 9)
 	{
 		dbl /= base;
 		n++;
@@ -33,7 +33,7 @@ int			dbl_front_size(double dbl, int base)
 	return (n);
 }
 
-int			dbl_frac_size(double dbl, int base)
+int			dbl_frac_size(double dbl, int base, int precision)
 {
 	int n;
 
@@ -41,14 +41,14 @@ int			dbl_frac_size(double dbl, int base)
 	if (dbl < 0)
 		dbl *= -1;
 	dbl = (dbl - (long long)dbl) * base;
-	while ((long long) dbl == 0 && n < 15)
+	while (((long long) dbl) == 0 && n < 12)
 	{
 		dbl *= base;
 		n++;
 	}
 	if ((long long) dbl == 0)
 		return (0);
-	while ((long long)dbl > 0.9)
+	while (dbl >= 0.1 && n <= precision + 1)
 	{
 		dbl = (dbl - (long long)dbl) * base;
 		n++;

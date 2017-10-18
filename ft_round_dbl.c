@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 14:22:13 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/04 14:41:39 by esterna          ###   ########.fr       */
+/*   Updated: 2017/08/31 19:26:34 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ double			ft_round_dbl(double dbl, int precision)
 		n = (p == 1) ? (long)tmp : n;
 		p--;
 	}
-	result = 5 / fac;
+	result = (10 - n) / fac;
 	if (n < 5)
 		return (dbl);
 	if (dbl < 0)

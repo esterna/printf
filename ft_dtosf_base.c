@@ -6,7 +6,7 @@
 /*   By: esterna <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/06/13 13:47:49 by esterna           #+#    #+#             */
-/*   Updated: 2017/08/17 22:43:11 by esterna          ###   ########.fr       */
+/*   Updated: 2017/09/05 20:57:05 by esterna          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,8 @@ static char			*str_setup(double dbl, int base, int precision)
 	int		len;
 
 	exp = find_exponent(dbl, base);
-	len = 4 + ((precision > 0) ? precision + 1 : 0) + ((dbl < 0) ? 1 : 0)
-		+ ((base == 16) ? 2 : 0) + ((exp > 9 || base == 10) ? 1 : 0);
+	len = 2 + ((precision > 0) ? precision + 1 : 0) + 
+		((base == 16) ? 2 : 0) + ft_nbrsize_base(exp, base);
 	sf = ft_strnew(sizeof(char) * len);
 	*sf = (dbl < 0.0) ? '-' : '\0';
 	if (base == 10 && precision != 0)
@@ -88,8 +88,12 @@ static char			*str_setup(double dbl, int base, int precision)
 	}
 	len--;
 	sf[len--] = (((exp < 0) ? exp * -1 : exp) % 10) + '0';
-	if (exp > 9 || base == 10)
-		sf[len--] = (((exp /= 10) < 0) ? exp * -1 : exp) + '0';
+	if ((exp = ft_abs(exp)) > 9 || base == 10)
+	{
+		sf[len--] = ((exp /= 10) == 0) ? '0' : (exp % 10) + '0'; 
+		while ((exp /= 10) > 0)
+			sf[len--] = exp % 10 + '0';
+	}
 	sf[len--] = (find_exponent(dbl, base) >= 0) ? '+' : '-';
 	sf[len--] = (base == 10) ? 'e' : 'p';
 	return (sf);
@@ -117,6 +121,7 @@ char				*ft_dtosf_base(double dbl, int base, int precision)
 		return (NULL);
 	if (dbl == INFINITY || dbl == -INFINITY || dbl == NAN || dbl == -NAN)
 		return (nan_inf(dbl));
+	dbl = ft_round_dbl(dbl, ft_abs(find_exponent(dbl, base)) + precision);
 	precision = (precision >= 0) ? precision : find_precision(dbl, base);
 	sf = str_setup(dbl, base, precision);
 	tmp = sf + ((dbl < 0) ? 1 : 0) + ((base == 16) ? 2 : 0);
